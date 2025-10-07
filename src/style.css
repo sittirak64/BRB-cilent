@@ -9,3 +9,19 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face{
+  font-family: 'KraNok';
+  src: url('./assets/KraNok/SOV_JD_KraNok.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face{
+  font-family: 'SacramentoRegular';
+  src: url('./assets/sacramento-2/SacramentoRegular-X3LaG.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}

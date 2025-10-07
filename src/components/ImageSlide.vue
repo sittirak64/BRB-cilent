@@ -1,13 +1,11 @@
 <template>
-    <div class="background">
-        <div class="slide-container">
-            <div class="slide-wrapper" :key="currentIndex" :class="{ fade: isFading }">
-                <img :src="currentSlide.image" alt="Slide Image" class="slide-image" />
-                <div class="overlay" :class="{ show: !isFading }">
-                    <h1 class="title">{{ currentSlide.title }}</h1>
-                    <p class="subtitle">{{ currentSlide.subtitle }}</p>
-                    <button class="cta-button">Consult</button>
-                </div>
+    <div class="slide-container">
+        <div class="slide-wrapper" :key="currentIndex" :class="{ fade: isFading }">
+            <img :src="currentSlide.image" alt="Slide Image" class="slide-image" />
+            <div class="overlay" :class="{ show: !isFading }">
+                <h1 class="title">{{ currentSlide.title }}</h1>
+                <p class="subtitle">{{ currentSlide.subtitle }}</p>
+                <button class="cta-button">Contact Us</button>
             </div>
         </div>
     </div>
@@ -50,23 +48,23 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.slide-container {
-    width: 100vw;
-    height: 98vh;
-    overflow: hidden;
-    border-radius: 20px;
-    position: relative;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+    .slide-container {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 
 .slide-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
 }
+
 .slide-image {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     object-fit: cover;
     opacity: 1;
     transform: scale(1);
@@ -86,7 +84,7 @@ onMounted(() => {
     text-align: center;
     color: white;
     background: rgba(0, 0, 0, 0.35);
-    padding: 40px 60px;
+    padding: 40px 20px;
     border-radius: 20px;
     opacity: 0;
     transition: opacity 1s ease, transform 1s ease;

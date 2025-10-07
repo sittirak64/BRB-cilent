@@ -1,12 +1,16 @@
 <template>
-    <head>
-        <NavBar />
-    </head>
+    <header>
+        <NavBar/>
+    </header>
     <main>
         <ProjectComponent/>
     </main>
+    <footer>
+        <Footer/>
+    </footer>
 </template>
 <script>
+import Footer from '../components/Footer.vue';
 import ProjectComponent from '../components/ProjectComponent.vue';
 
 
