@@ -33,7 +33,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import ImgLogo from '../assets/logo/BRB-logo1.png'
+import ImgLogo from '../assets/logo/BRB-logo.png'
 
 // 📌 นำเข้าไอคอน
 import homeIcon from '../assets/IconNavBar/IconHome.png'

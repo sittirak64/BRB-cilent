@@ -8,12 +8,19 @@
             <p>For more information, please contact : </p>
             <p>Tel : 09xx-xxx-xxx</p>
             <p>......</p>         
-            <button class="consult-button">Consultation request</button>
+            <button class="consult-button" @click="Contact">Consultation request</button>
         </div>
         <div class="footer-image"></div>
     </footer>
 </template>
-!
+<script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const Contact = () => {
+  router.push('/contact')
+}
+</script>
 <style scoped>
 .footer-section {
     padding-top: 50px;

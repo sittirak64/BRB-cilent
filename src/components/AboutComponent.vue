@@ -1,7 +1,7 @@
 <template>
     <div class="block-container">
         <div class="text">
-            <span style="font-size: 25px;">We are</span>
+            <span style="font-size: 25px; color: #000;">We are</span>
             <span> Baan Rim Bueng </span>
         </div>
         <div class="subtitle">

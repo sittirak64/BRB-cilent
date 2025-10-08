@@ -291,8 +291,8 @@ onBeforeUnmount(() => {
 
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 2px;
+  right: 2px;
   background: transparent;
   border: none;
   font-size: 20px;

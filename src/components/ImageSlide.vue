@@ -5,7 +5,7 @@
             <div class="overlay" :class="{ show: !isFading }">
                 <h1 class="title">{{ currentSlide.title }}</h1>
                 <p class="subtitle">{{ currentSlide.subtitle }}</p>
-                <button class="cta-button">Contact Us</button>
+                <button class="cta-button" @click="Contact">Contact Us</button>
             </div>
         </div>
     </div>
@@ -13,6 +13,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 const slides = [
     {
@@ -35,6 +36,12 @@ const slides = [
 const currentIndex = ref(0)
 const currentSlide = computed(() => slides[currentIndex.value])
 const isFading = ref(false)
+
+const router = useRouter()
+
+const Contact = () => {
+  router.push('/contact')
+}
 
 onMounted(() => {
     setInterval(() => {

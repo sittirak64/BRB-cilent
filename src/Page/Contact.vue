@@ -1,21 +1,22 @@
 <template>
-้<header>
-    <NavBar/>
-</header>
-<main>
-
-</main>
-<footer>
-    <Footer/>
-</footer>
+    ้<header>
+        <NavBar />
+    </header>
+    <main>
+        <ContactComponent/>
+    </main>
+    <footer>
+        <Footer />
+    </footer>
 </template>
 <script>
-// import AboutComponent from '../components/AboutComponent.vue';
+import ContactComponent from '../components/ContactComponent.vue';
+
 export default {
-  name: 'Contact', 
-  components: {
-    // AboutComponent
-  },
+    name: 'Contact',
+    components: {
+        ContactComponent
+    },
 };
 
 </script>
