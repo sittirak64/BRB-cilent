@@ -8,7 +8,7 @@
             <p>For more information, please contact : </p>
             <p>Tel : 09xx-xxx-xxx</p>
             <p>......</p>         
-            <button class="consult-button">Free Consultation service!</button>
+            <button class="consult-button">Consultation request</button>
         </div>
         <div class="footer-image"></div>
     </footer>

@@ -101,7 +101,7 @@ const isActive = (path) => route.path === path
   transition: all 0.3s ease;
 }
 .logo-img.small {
-  width: 50px; /* ✅ โลโก้เล็กลงตอนย่อ */
+  width: 50px; 
 }
 
 .nav-links {
@@ -126,7 +126,6 @@ const isActive = (path) => route.path === path
   font-weight: 600;
   padding: 10px 15px;
   border-radius: 10px;
-  transition: all 0.3s ease;
   gap: 12px;
   position: relative;
 }
