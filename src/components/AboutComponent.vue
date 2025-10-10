@@ -56,7 +56,6 @@ const images = [
     new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
     new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
     new URL('../assets/Ex.home/Ex4.jpg', import.meta.url).href,
-    new URL('../assets/Ex.home/Ex1.jpg', import.meta.url).href,    
 ]
 
 const currentImage = ref(images[0])
@@ -136,7 +135,7 @@ function changeImage(img) {
     align-items: flex-start;
     justify-content: space-between;
     gap: 2rem;
-    padding: 2rem 4rem;
+    padding: 2rem 2.8rem;
 }
 
 .text-section {
@@ -216,5 +215,40 @@ function changeImage(img) {
 .thumbnail.active {
     opacity: 1;
     border: 2px solid #b55c00;
+}
+
+@media only screen and (max-width: 768px) {
+    .block-container {
+        width: 100vw;
+        height: 25vh;
+    }
+
+    .text {
+        font-size: 40px;
+    }
+
+    .subtitle {
+        font-size: 15px;
+    }
+
+    .text-section .title {
+        font-size: 1.5rem;
+    }
+
+    .text-section h3 {
+        font-size: 1rem;
+    }
+
+    .text-section p {
+        font-size: 15px;
+    }
+
+    .main-image {
+        height: 200px;
+    }
+
+    .thumbnail {
+        height: 50px;
+    }
 }
 </style>

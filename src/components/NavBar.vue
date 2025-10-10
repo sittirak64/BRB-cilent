@@ -1,20 +1,10 @@
 <template>
-  <aside 
-    class="sidebar" 
-    :class="{ collapsed: isCollapsed }" 
-    @mouseenter="isCollapsed = false" 
-    @mouseleave="isCollapsed = true"
-  >
+  <aside class="sidebar" :class="{ collapsed: isCollapsed }" @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave">
     <div class="sidebar-content">
-      <!-- โลโก้อยู่บนสุดตลอด -->
       <div class="logo">
         <router-link to="/homepage">
-          <img 
-            :src="ImgLogo" 
-            alt="Logo" 
-            class="logo-img" 
-            :class="{ small: isCollapsed }"
-          />
+          <img :src="ImgLogo" alt="Logo" class="logo-img" :class="{ small: isCollapsed }" />
         </router-link>
       </div>
 
@@ -22,7 +12,8 @@
         <li v-for="link in links" :key="link.name">
           <router-link :to="link.path" :class="{ active: isActive(link.path) }">
             <img :src="link.icon" alt="" class="icon" />
-            <span v-if="!isCollapsed">{{ link.name }}</span>
+            <!-- ✅ แสดงชื่อเฉพาะตอนที่ไม่ย่อ และไม่ใช่มือถือ -->
+            <span v-if="!isCollapsed && !isMobile">{{ link.name }}</span>
           </router-link>
         </li>
       </ul>
@@ -31,11 +22,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ImgLogo from '../assets/logo/BRB-logo.png'
 
-// 📌 นำเข้าไอคอน
 import homeIcon from '../assets/IconNavBar/IconHome.png'
 import projectIcon from '../assets/IconNavBar/IconBluePrint.png'
 import aboutIcon from '../assets/IconNavBar/IconAbout.png'
@@ -43,6 +33,8 @@ import contactIcon from '../assets/IconNavBar/IconContact-us.png'
 
 const route = useRoute()
 const isCollapsed = ref(false)
+const isMobile = ref(false)
+const hasMouse = ref(true)
 
 const links = ref([
   { name: 'Home', path: '/homepage', icon: homeIcon },
@@ -52,6 +44,49 @@ const links = ref([
 ])
 
 const isActive = (path) => route.path === path
+
+// ตรวจสอบประเภทอุปกรณ์
+const checkDevice = () => {
+  const width = window.innerWidth
+  const pointerType = window.matchMedia('(pointer: fine)').matches // มีเมาส์ไหม
+
+  isMobile.value = width < 768
+  hasMouse.value = pointerType
+
+  // ถ้ามือถือ → ย่อ sidebar
+  if (isMobile.value) {
+    isCollapsed.value = true
+  } else if (!hasMouse.value) {
+    // ถ้าไม่มีเมาส์ (iPad / Tablet) → ขยายตลอด
+    isCollapsed.value = false
+  } else {
+    // ถ้ามีเมาส์ (PC) → เริ่มแบบย่อ
+    isCollapsed.value = true
+  }
+}
+
+onMounted(() => {
+  checkDevice()
+  window.addEventListener('resize', checkDevice)
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', checkDevice)
+})
+
+// hover ทำงานเฉพาะเครื่องที่มีเมาส์
+const handleMouseEnter = () => {
+  const width = window.innerWidth
+  if (hasMouse.value && width > 480) {
+    isCollapsed.value = false
+  }
+}
+
+const handleMouseLeave = () => {
+  const width = window.innerWidth
+  if (hasMouse.value && width > 480) {
+    isCollapsed.value = true
+  }
+}
 </script>
 
 <style scoped>
@@ -69,7 +104,7 @@ const isActive = (path) => route.path === path
   border: 1px solid rgba(255, 255, 255, 0.4);
   transition: width 0.3s ease;
   display: flex;
-  flex-direction: column; /* ✅ แยกแนวตั้ง */
+  flex-direction: column;
   align-items: center;
   padding: 20px 0;
   z-index: 1000;
@@ -100,8 +135,9 @@ const isActive = (path) => route.path === path
   border-radius: 15px;
   transition: all 0.3s ease;
 }
+
 .logo-img.small {
-  width: 50px; 
+  width: 50px;
 }
 
 .nav-links {
@@ -158,4 +194,104 @@ const isActive = (path) => route.path === path
   box-shadow: inset 3px 0 0 #ffd900;
 }
 
+/* 📱 มือถือ: แสดง icon-only */
+@media only screen and (max-width: 820px) {
+  .sidebar {
+    width: 80px;
+    height: auto;
+    top: 30%;
+    left: 20px;
+    border-radius: 15px;
+  }
+
+  .sidebar-content {
+    gap: 20px;
+  }
+
+  .logo-img {
+    width: 50px;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+
+  .nav-links li a {
+    justify-content: center;
+    width: 60px;
+  }
+
+  .nav-links li a span {
+    display: none;
+    /* 🔥 ซ่อนชื่อเมนู */
+  }
+
+  .nav-links li a.active {
+    width: 40px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .sidebar {
+    top: auto;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    height: 70px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    transition: none;
+  }
+
+  .sidebar-content {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    transition: none;
+  }
+
+  .sidebar.collapsed {
+    width: 90%;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .nav-links li a {
+    justify-content: center;
+    width: auto;
+    padding: 8px;
+  }
+
+  .nav-links li a span {
+    display: none;
+    /* ซ่อนชื่อเมนู */
+  }
+
+  .icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .nav-links li a.active {
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: inset 0 3px 0 #ffd900;
+    /* เส้น active อยู่ด้านบนแทน */
+  }
+}
 </style>

@@ -203,6 +203,7 @@ onBeforeUnmount(() => {
   background-size: cover;
   background-position: center;
   position: relative;
+  overflow: hidden;
 }
 
 .block-container::before {
@@ -241,12 +242,12 @@ onBeforeUnmount(() => {
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 4vw;
   justify-items: center;
 }
 
 .card {
-  width: 300px;
+  width: 350px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -304,7 +305,7 @@ onBeforeUnmount(() => {
   display: flex;
   flex: 1;
   gap: 30px;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .modal-left {
@@ -343,16 +344,9 @@ onBeforeUnmount(() => {
   justify-items: center;
 }
 
-.slideshow-container {
-  position: relative;
-  width: 100%;
-  height: 400px;
-  /* ✅ กำหนดกรอบความสูงคงที่ */
-  border-radius: 12px;
-  overflow: hidden;
-  background: #ffffff;
-  padding-bottom: 50px;
-  /* สีพื้นหลังถ้ารูปโหลดไม่ทัน */
+.scroll-container {
+  overflow-x: hidden;
+  white-space: nowrap;
 }
 
 .slide {
@@ -448,5 +442,106 @@ onBeforeUnmount(() => {
 
 .scroll-image:hover {
   opacity: 0.8;
+}
+
+@media only screen and (max-width: 820px) {
+  .portfolio-section {
+  padding: 50px 120px;
+}
+  .block-container {
+    width: 100vw;
+    height: 30vh;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    width: 300px;
+  }
+
+  .modal-overlay {
+    z-index: 9999;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-left {
+    order: 1;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .modal-title {
+    font-size: 22px;
+  }
+
+  .modal-desc {
+    font-size: 16px;
+  }
+
+  .modal-detail {
+    font-size: 14px;
+  }
+
+  /* รูปใหญ่ลงมาด้านล่าง */
+  .modal-right {
+    order: 2;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .slideshow-container {
+    height: auto;
+    max-height: 350px;
+  }
+
+  .slide-image {
+    height: auto;
+    max-height: 300px;
+  }
+
+  /* thumbnail ด้านล่าง */
+  .scroll-container {
+    margin-top: 10px;
+    padding: 5px;
+  }
+
+  /* ปรับ layout ทั่วไป */
+  .modal-content {
+    width: 95%;
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .close-btn {
+    top: 5px;
+    right: 5px;
+    font-size: 18px;
+  }
+
+}
+
+@media only screen and (max-width: 480px) {
+  .portfolio-section {
+   margin-bottom: 50px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .portfolio-section {
+    padding: 50px 50px;
+  }
 }
 </style>

@@ -8,7 +8,6 @@
             <p>We’re pleased to advise, contact us</p>
         </div>
     </div>
-
     <div class="background-block">
         <!-- ด้านซ้าย: ข้อความ -->
         <div class="text-section">
@@ -74,8 +73,17 @@ const images = ref([
     new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
     new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
     new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
+    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
     new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
     new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
+    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
+    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
+    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
+    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
+    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
+    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
+    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
+    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
     new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
     new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
     new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
@@ -84,15 +92,6 @@ const images = ref([
     new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
     new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
     new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
     // ...อื่น ๆ ตามเดิม
 ]);
 
@@ -108,6 +107,7 @@ const columns = computed(() => {
 
 <style scoped>
 .block-container {
+    top: -25px;
     width: 99vw;
     height: 50vh;
     display: flex;
@@ -118,7 +118,6 @@ const columns = computed(() => {
     background-size: cover;
     background-position: center;
     position: relative;
-    overflow: hidden;
 }
 
 .block-container::before {
@@ -160,7 +159,7 @@ const columns = computed(() => {
     display: flex;
     justify-content: space-between;
     gap: 2rem;
-    padding: 2rem 4rem;
+    padding: 2rem 0.1rem;
 }
 
 .text-section {
@@ -240,5 +239,39 @@ const columns = computed(() => {
     width: 100%;
     margin-top: 8px;
     border-radius: 8px;
+}
+
+@media only screen and (max-width: 820px) {
+    .text-section {
+        padding-left: 110px;
+    }
+
+    .block-container {
+        height: 30vh;
+    }
+
+    .text-section .title {
+        font-size: 1.5rem;
+    }
+
+    .text-section h3 {
+        font-size: 1.1rem;
+    }
+
+    .label {
+        font-size: 1.2rem;
+    }
+
+    .value {
+        font-size: 1rem;
+    }
+
+    .text-section p {
+        font-size: 1rem;
+    }
+
+    .column img {
+        height: 50px;
+    }
 }
 </style>
