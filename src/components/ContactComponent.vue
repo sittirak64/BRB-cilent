@@ -159,7 +159,7 @@ const columns = computed(() => {
     display: flex;
     justify-content: space-between;
     gap: 2rem;
-    padding: 2rem 0.1rem;
+    padding: 2rem 0px;
 }
 
 .text-section {
@@ -274,4 +274,69 @@ const columns = computed(() => {
         height: 50px;
     }
 }
+@media only screen and (max-width: 480px) {
+  .block-container {
+    height: 20vh;
+  }
+
+  .text {
+    font-size: 15vw;
+  }
+
+  .subtitle {
+    font-size: 4vw;
+  }
+
+  /* ✅ ซ่อนส่วนภาพ */
+  .image-section {
+    display: none;
+  }
+
+  /* ✅ ให้ข้อความกินเต็มจอ */
+  .background-block {
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+  }
+
+  .text-section {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .text-section .title {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .text-section h3 {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .text-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .contact-item {
+    flex-wrap: wrap; /* ถ้าข้อความยาวจะขึ้นบรรทัดใหม่ */
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .label {
+    font-size: 1.2rem;
+  }
+
+  .value {
+    font-size: 1rem;
+  }
+}
+
 </style>

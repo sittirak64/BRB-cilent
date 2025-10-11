@@ -139,7 +139,7 @@ function changeImage(img) {
 }
 
 .text-section {
-    padding-left: 70px;
+    padding-left: 100px;
     display: inline;
     /* flex: 1; */
     max-width: 50%;
@@ -243,12 +243,53 @@ function changeImage(img) {
         font-size: 15px;
     }
 
+    .background-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .text-section {
+        padding-left: 10vw;
+        max-width: 100%;
+    }
+
     .main-image {
         height: 200px;
+        
     }
 
     .thumbnail {
         height: 50px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .block-container {
+        height: 20vh;
+    }
+
+    .text {
+        font-size: 10vw;
+    }
+
+    .subtitle {
+        font-size: 10px;
+    }
+
+    .background-block {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .text-section {
+        padding-left: 20px;
+        max-width: 100%;
+    }
+
+    .thumbnail-list {
+        padding-bottom: 7vh;
     }
 }
 </style>

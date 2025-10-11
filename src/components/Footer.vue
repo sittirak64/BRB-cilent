@@ -105,7 +105,14 @@ const Contact = () => {
 }
 
 
-@media only screen and (max-width: 82px) {}
+@media only screen and (max-width: 820px) {
+   .footer-title {
+    font-size: 3.5vw;
+   } 
+    .footer-content {
+        padding-left: 15px;
+    }
+}
 
 @media only screen and (max-width: 480px) {
     .footer-section {
