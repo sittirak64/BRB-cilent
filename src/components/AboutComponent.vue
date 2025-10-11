@@ -131,16 +131,17 @@ function changeImage(img) {
 }
 
 .background-block {
-   width: 99vw;
-    height: 50vh;
+    position: relative;
+    /* ✅ เพิ่มบรรทัดนี้ */
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-image: url("../assets/Ex.home/Ex1.jpg");
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    background-image: url('../assets/BRB-image/BRB-project (13).jpg');
     background-size: cover;
     background-position: center;
-    position: relative;
+    padding: 2rem 2.8px;
+    z-index: 0;
 }
 
 .background-block::before {
@@ -153,7 +154,7 @@ function changeImage(img) {
 }
 
 .text-section {
-    padding-left: 100px;
+    padding-left: 130px;
     display: inline;
     /* flex: 1; */
     max-width: 50%;
@@ -163,12 +164,10 @@ function changeImage(img) {
 .text-section .title {
     font-size: 2rem;
     font-weight: 700;
-    color: #000;
     color: #ffffff;
 }
 
 .text-section span {
-    color: #b55c00;
     color: #ffffff;
 }
 
