@@ -22,19 +22,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import ImgLogo from '../assets/logo/BRB-logo.png'
-
-import homeIcon from '../assets/IconNavBar/IconHome.png'
+import homeIcon from '../assets/IconNavBar/home-icon-silhouette.png'
 import projectIcon from '../assets/IconNavBar/IconBluePrint.png'
 import aboutIcon from '../assets/IconNavBar/IconAbout.png'
 import contactIcon from '../assets/IconNavBar/IconContact-us.png'
+import ImgLogo from '../assets/logo/BRB-logo.png'
 
 const route = useRoute()
-const isCollapsed = ref(false)
+const isCollapsed = ref(false) // ✅ เริ่มต้นให้ขยาย
 const isMobile = ref(false)
 const hasMouse = ref(true)
+const isNavigating = ref(false) // ใช้ป้องกันการย่อระหว่างเปลี่ยนหน้า
 
 const links = ref([
   { name: 'Home', path: '/homepage', icon: homeIcon },
@@ -42,26 +42,19 @@ const links = ref([
   { name: 'About Us', path: '/about', icon: aboutIcon },
   { name: 'Contact', path: '/contact', icon: contactIcon },
 ])
-
 const isActive = (path) => route.path === path
-
-// ตรวจสอบประเภทอุปกรณ์
+// ตรวจอุปกรณ์
 const checkDevice = () => {
   const width = window.innerWidth
-  const pointerType = window.matchMedia('(pointer: fine)').matches // มีเมาส์ไหม
+  const pointerType = window.matchMedia('(pointer: fine)').matches
 
   isMobile.value = width < 768
   hasMouse.value = pointerType
 
-  // ถ้ามือถือ → ย่อ sidebar
   if (isMobile.value) {
-    isCollapsed.value = true
-  } else if (!hasMouse.value) {
-    // ถ้าไม่มีเมาส์ (iPad / Tablet) → ขยายตลอด
-    isCollapsed.value = false
+    isCollapsed.value = true // มือถือเริ่มต้นให้ย่อ
   } else {
-    // ถ้ามีเมาส์ (PC) → เริ่มแบบย่อ
-    isCollapsed.value = true
+    isCollapsed.value = false // ✅ desktop เริ่มต้นให้ขยาย
   }
 }
 
@@ -73,20 +66,32 @@ onUnmounted(() => {
   window.removeEventListener('resize', checkDevice)
 })
 
-// hover ทำงานเฉพาะเครื่องที่มีเมาส์
+// Hover เฉพาะ desktop เท่านั้น
 const handleMouseEnter = () => {
-  const width = window.innerWidth
-  if (hasMouse.value && width > 480) {
+  if (hasMouse.value && window.innerWidth > 768) {
     isCollapsed.value = false
   }
 }
 
 const handleMouseLeave = () => {
-  const width = window.innerWidth
-  if (hasMouse.value && width > 480) {
+  if (hasMouse.value && window.innerWidth > 768 && !isNavigating.value) {
     isCollapsed.value = true
   }
 }
+
+// ✅ ขยาย sidebar ทุกครั้งเมื่อเปลี่ยนหน้า
+watch(
+  () => route.path,
+  () => {
+    isNavigating.value = true
+    isCollapsed.value = false // 🔹 ให้ขยาย bar ทุกครั้งที่ route เปลี่ยน
+
+    setTimeout(() => {
+      isNavigating.value = false
+    }, 600) // รอให้ transition จบ
+  }
+)
+
 </script>
 
 <style scoped>

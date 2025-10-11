@@ -1,8 +1,9 @@
 <template>
-    ้<header>
+    <header>
         <NavBar />
     </header>
     <main>
+        <Logo/>
         <ContactComponent/>
     </main>
     <footer>

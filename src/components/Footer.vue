@@ -23,9 +23,7 @@ const Contact = () => {
 </script>
 <style scoped>
 .footer-section {
-    padding-bottom: 10px;
-    padding-top: 50px;
-    padding-left: 10px;
+    padding-bottom: 5px;
     position: relative;
     display: flex;
     width: 100%;
@@ -39,12 +37,10 @@ const Contact = () => {
     color: white;
     flex: 1;
     /* padding: 40px; */
-    clip-path: polygon(0 0, 90% 0, 70% 100%, 0% 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
-    border-radius: 15px;
 }
 
 .footer-title {

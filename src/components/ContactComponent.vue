@@ -57,58 +57,37 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
+
+// ไอคอน
 import FacebookIcon from "../assets/IconContact/facebook.png";
 import GmailIcon from "../assets/IconContact/gmail.png";
 import CallIcon from "../assets/IconContact/telephone-call.png";
 import LineIcon from "../assets/IconContact/line.png";
 
-const images = ref([
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    // ...อื่น ๆ ตามเดิม
-]);
+// ดึงภาพทั้งหมด
+const images = Object.values(
+  import.meta.glob('../assets/BRB-image/*.jpg', { eager: true, import: 'default' })
+).sort()
 
+// แบ่งเป็น 4 คอลัมน์
 const columns = computed(() => {
-    const colCount = 4;
-    const cols = Array.from({ length: colCount }, () => []);
-    images.value.forEach((img, index) => {
-        cols[index % colCount].push(img);
-    });
-    return cols;
+  const colCount = 4;
+  const cols = Array.from({ length: colCount }, () => []);
+  
+  images.forEach((img, index) => {
+    cols[index % colCount].push(img);
+  });
+  
+  return cols;
 });
+
 </script>
+
 
 <style scoped>
 .block-container {
-    top: -25px;
-    width: 99vw;
+    width: 100vw;
     height: 50vh;
     display: flex;
     flex-direction: column;
@@ -156,10 +135,26 @@ const columns = computed(() => {
 }
 
 .background-block {
+    position: relative;
+    /* ✅ เพิ่มบรรทัดนี้ */
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 2rem;
-    padding: 2rem 0px;
+    background-image: url('../assets/BRB-image/BRB-project (13).jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 2rem 2.8px;
+    z-index: 0;
+}
+
+.background-block::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(15px);
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: -1;
 }
 
 .text-section {
@@ -170,26 +165,27 @@ const columns = computed(() => {
 .text-section .title {
     font-size: 2rem;
     font-weight: 700;
-    color: #000;
+    color: #ffffff;
 }
 
 .text-section span {
-    color: #b55c00;
+     color: #ffffff;
 }
 
 .text-section .content {
     margin-top: 1.5rem;
+     color: #ffffff;
 }
 
 .text-section h3 {
-    color: #b55c00;
+    color: #ffff;
     font-size: 1.5rem;
     margin-top: 1.5rem;
 }
 
 .text-section p {
     font-size: 1.2rem;
-    color: #000;
+    color: #ffff;
 }
 
 /* ✅ Contact Item ปรับให้อยู่ในบรรทัดเดียว */
@@ -276,7 +272,10 @@ const columns = computed(() => {
 }
 @media only screen and (max-width: 480px) {
   .block-container {
-    height: 20vh;
+    height: 30vh;
+  }
+  .background-block {
+    height: 70vh;
   }
 
   .text {
