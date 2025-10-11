@@ -47,7 +47,7 @@
           <!-- ✅ Thumbnail -->
           <div class="scroll-container" ref="scrollContainer">
             <img v-for="(thumb, index) in selectedItem.images" :key="index" :src="thumb" class="scroll-image"
-              @click="setSlide(index)" />
+              :class="{ active: index === slideIndex }" @click="setSlide(index)" />
           </div>
         </div>
       </div>
@@ -56,153 +56,74 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-const portfolios = [
-  {
-    images: [
-      new URL('../assets/Ex.home/Ex1.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-    ],
-    title: 'บ้านโมเดิร์น',
-    status: 'in progress',
-    desc: 'บ้านสไตล์โมเดิร์น 2 ชั้น',
-    detail: 'รายละเอียดเพิ่มเติม: บ้านนี้ใช้โครงสร้างเหล็ก ผนังปูนเปลือย และมีพื้นที่ใช้สอย 200 ตร.ม.'
-  },
-  {
-    images: [
-      new URL('../assets/Ex.home/Ex4.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-    ],
-    title: 'บ้านสวน',
-    desc: 'บ้านพักตากอากาศ',
-    status: 'Completed',
-    detail: 'บ้านไม้ทรงไทยร่วมสมัย พร้อมสวนรอบบ้านสำหรับพักผ่อน'
-  },
-  {
-    images: [
-      new URL('../assets/Ex.home/Ex4.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex1.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-
-    ],
-    title: 'บ้านสวน',
-    desc: 'บ้านพักตากอากาศ',
-    status: 'Completed',
-    detail: 'บ้านไม้ทรงไทยร่วมสมัย พร้อมสวนรอบบ้านสำหรับพักผ่อน'
-  },
-  {
-    images: [
-      new URL('../assets/Ex.home/Ex4.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex1.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-
-    ],
-    title: 'บ้านสวน',
-    desc: 'บ้านพักตากอากาศ',
-    status: 'Completed',
-    detail: 'บ้านไม้ทรงไทยร่วมสมัย พร้อมสวนรอบบ้านสำหรับพักผ่อน'
-  },
-  {
-    images: [
-      new URL('../assets/Ex.home/Ex4.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex1.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-      new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-
-    ],
-    title: 'บ้านสวน',
-    desc: 'บ้านพักตากอากาศ',
-    status: 'Completed',
-    detail: 'บ้านไม้ทรงไทยร่วมสมัย พร้อมสวนรอบบ้านสำหรับพักผ่อน'
-  },
-]
+import { ref } from 'vue'
+import { portfolios } from '../data/portfolio'
 
 const showModal = ref(false)
 const selectedItem = ref({})
 const slideIndex = ref(0)
 const scrollContainer = ref(null)
-let autoScrollInterval = null
 
 function openModal(item) {
   selectedItem.value = item
   slideIndex.value = 0
   showModal.value = true
-  setTimeout(startAutoScroll, 500) // เริ่ม auto scroll
 }
 
 function closeModal() {
   showModal.value = false
-  stopAutoScroll()
 }
 
+/* ✅ ฟังก์ชันเปลี่ยนสไลด์ พร้อมจัดให้อยู่ตรงกลาง */
 function changeSlide(n) {
   const total = selectedItem.value.images.length
   slideIndex.value = (slideIndex.value + n + total) % total
+  scrollToActiveThumb()
 }
 
+/* ✅ ฟังก์ชันเลือกสไลด์จาก thumbnail */
 function setSlide(index) {
   slideIndex.value = index
+  scrollToActiveThumb()
 }
 
-// ✅ Auto Scroll Logic
-function startAutoScroll() {
+/* ✅ ฟังก์ชันจัดให้อยู่ตรงกลาง */
+function scrollToActiveThumb() {
   const container = scrollContainer.value
   if (!container) return
-  stopAutoScroll() // ป้องกันซ้ำ
+  const thumbnails = container.querySelectorAll('img')
+  const activeThumb = thumbnails[slideIndex.value]
 
-  autoScrollInterval = setInterval(() => {
-    const maxScrollLeft = container.scrollWidth - container.clientWidth
-    // ถ้า scroll ถึงสุดแล้วให้กลับไปจุดเริ่ม
-    if (container.scrollLeft >= maxScrollLeft - 10) {
-      container.scrollTo({ left: 0, behavior: 'smooth' })
-    } else {
-      container.scrollBy({ left: 150, behavior: 'smooth' })
-    }
-  }, 2000)
+  if (activeThumb) {
+    // ✅ คำนวณตำแหน่งให้อยู่ตรงกลาง container เสมอ
+    const containerWidth = container.clientWidth
+    const thumbCenter = activeThumb.offsetLeft + activeThumb.offsetWidth / 2
+    const scrollPosition = thumbCenter - containerWidth / 2
+
+    // ✅ ป้องกัน scrollPosition < 0 (ไม่ให้เด้งซ้ายเกินไป)
+    const maxScroll = container.scrollWidth - containerWidth
+    const safeScroll = Math.max(0, Math.min(scrollPosition, maxScroll))
+
+    container.scrollTo({ left: safeScroll, behavior: 'smooth' })
+  }
 }
 
-function stopAutoScroll() {
-  if (autoScrollInterval) clearInterval(autoScrollInterval)
-}
-
-onBeforeUnmount(() => {
-  stopAutoScroll()
-})
 </script>
-
 
 <style scoped>
 /* ---------- พื้นหลัง ---------- */
 .block-container {
-  width: 99vw;
+  width: 100vw;
   height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/Ex.home/Ex1.jpg');
+  background-image: url('../assets/BRB-image/BRB-project (13).jpg');
   background-size: cover;
   background-position: center;
   position: relative;
+  overflow: hidden;
 }
 
 .block-container::before {
@@ -210,7 +131,7 @@ onBeforeUnmount(() => {
   position: absolute;
   inset: 0;
   background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(7px);
+  backdrop-filter: blur(2px);
   z-index: 1;
 }
 
@@ -235,18 +156,38 @@ onBeforeUnmount(() => {
 
 /* ---------- การ์ด ---------- */
 .portfolio-section {
-  padding: 50px 140px;
+  position: relative;
+  padding: 20px 170px;
+  background-image: url('../assets/BRB-image/BRB-project (13).jpg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  /* ป้องกันเลเยอร์ล้น */
+  z-index: 0;
+}
+
+.portfolio-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* ครอบเต็มพื้นที่ */
+  backdrop-filter: blur(8px);
+  /* ✅ ทำให้พื้นหลังเบลอ */
+  background-color: rgba(0, 0, 0, 0.2);
+  /* ✅ เพิ่มความจาง */
+  z-index: -1;
+  /* อยู่หลังเนื้อหา */
 }
 
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 4vw;
   justify-items: center;
 }
 
 .card {
-  width: 300px;
+  width: 350px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -270,6 +211,7 @@ onBeforeUnmount(() => {
 .modal-overlay {
   position: fixed;
   inset: 0;
+  padding-left: 50px;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
@@ -304,7 +246,7 @@ onBeforeUnmount(() => {
   display: flex;
   flex: 1;
   gap: 30px;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .modal-left {
@@ -328,8 +270,8 @@ onBeforeUnmount(() => {
 }
 
 .modal-detail {
-  font-size: 14px;
-  color: #666;
+  font-size: 1.1vw;
+  color: #000000;
 }
 
 /* ---------- Slideshow ---------- */
@@ -343,16 +285,9 @@ onBeforeUnmount(() => {
   justify-items: center;
 }
 
-.slideshow-container {
-  position: relative;
-  width: 100%;
-  height: 400px;
-  /* ✅ กำหนดกรอบความสูงคงที่ */
-  border-radius: 12px;
-  overflow: hidden;
-  background: #ffffff;
-  padding-bottom: 50px;
-  /* สีพื้นหลังถ้ารูปโหลดไม่ทัน */
+.scroll-container {
+  overflow-x: hidden;
+  white-space: nowrap;
 }
 
 .slide {
@@ -362,14 +297,14 @@ onBeforeUnmount(() => {
 
 .slide-image {
   width: 100%;
-  height: 100%;
+  height: 500px;
   object-fit: cover;
   border-radius: 12px;
 }
 
 .slide-count {
   position: absolute;
-  bottom: 60px;
+  bottom: 20vh;
   right: 15px;
   color: #fff;
   background: rgba(0, 0, 0, 0.4);
@@ -444,9 +379,257 @@ onBeforeUnmount(() => {
   object-fit: cover;
   cursor: pointer;
   display: inline-block;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+  border: 3px solid transparent;
 }
+
+/* ✅ แสดง active thumbnail */
+.scroll-image.active {
+  opacity: 1;
+  border-color: #b55c00;
+  transform: scale(1.05);
+}
+
 
 .scroll-image:hover {
   opacity: 0.8;
+}
+
+@media only screen and (max-width: 1440px) {
+  .slide-count {
+    bottom: 30vh;
+  }
+
+}
+
+@media only screen and (max-width: 820px) {
+  .portfolio-section {
+    padding: 50px 120px;
+  }
+
+  .block-container {
+    width: 100vw;
+    height: 30vh;
+  }
+
+  .slide-count {
+    bottom: 15vh;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    width: 300px;
+  }
+
+  .modal-overlay {
+    padding: 20px;
+    z-index: 9999;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-left {
+    order: 1;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .modal-title {
+    font-size: 22px;
+  }
+
+  .modal-desc {
+    font-size: 16px;
+  }
+
+  .modal-detail {
+    font-size: 14px;
+  }
+
+  /* รูปใหญ่ลงมาด้านล่าง */
+  .modal-right {
+    order: 2;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .slideshow-container {
+    height: auto;
+    max-height: 350px;
+  }
+
+  .slide-image {
+    height: auto;
+    max-height: 300px;
+  }
+
+  /* thumbnail ด้านล่าง */
+  .scroll-container {
+    margin-top: 10px;
+    padding: 5px;
+  }
+
+  /* ปรับ layout ทั่วไป */
+  .modal-content {
+    width: 95%;
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .close-btn {
+    top: 5px;
+    right: 5px;
+    font-size: 18px;
+  }
+
+}
+
+@media only screen and (max-width: 480px) {
+  .portfolio-section {
+    padding: 30px 20px;
+    margin-bottom: 50px;
+  }
+
+  .block-container {
+    width: 100vw;
+    height: 25vh;
+    background-position: center;
+  }
+
+  .text {
+    font-size: 30px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+
+  /* ✅ การ์ด */
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 330px;
+  }
+
+  .card-image {
+    height: 180px;
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    padding: 0 10px 10px;
+  }
+
+  /* ✅ Modal */
+  .modal-overlay {
+    padding: 10px;
+  }
+
+  .modal-content {
+    width: 95%;
+    height: auto;
+    max-height: 95%;
+    padding: 15px 10px;
+    overflow-y: auto;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    overflow-y: auto;
+  }
+
+  .modal-body::-webkit-scrollbar {
+    display: none;
+  }
+
+  .modal-left {
+    order: 1;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .modal-title {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .modal-desc {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .modal-detail {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .modal-right {
+    order: 2;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  /* ✅ Slide หลัก */
+  .slideshow-container {
+    width: 100%;
+    height: auto;
+    max-height: 260px;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: auto;
+    max-height: 240px;
+    border-radius: 10px;
+  }
+
+  .slide-count {
+    bottom: 12vh;
+  }
+
+  /* ✅ Thumbnail */
+  .scroll-container {
+    margin-top: 10px;
+    padding: 5px;
+  }
+
+  .scroll-image {
+    width: 100px;
+    height: 70px;
+    margin-right: 6px;
+    border-radius: 6px;
+    opacity: 0.7;
+  }
+
+  .scroll-image.active {
+    border-color: #b55c00;
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .close-btn {
+    top: 8px;
+    right: 8px;
+    font-size: 18px;
+  }
 }
 </style>

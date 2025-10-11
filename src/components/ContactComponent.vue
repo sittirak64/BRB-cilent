@@ -8,7 +8,6 @@
             <p>We’re pleased to advise, contact us</p>
         </div>
     </div>
-
     <div class="background-block">
         <!-- ด้านซ้าย: ข้อความ -->
         <div class="text-section">
@@ -58,57 +57,37 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
+
+// ไอคอน
 import FacebookIcon from "../assets/IconContact/facebook.png";
 import GmailIcon from "../assets/IconContact/gmail.png";
 import CallIcon from "../assets/IconContact/telephone-call.png";
 import LineIcon from "../assets/IconContact/line.png";
 
-const images = ref([
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex1.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex2.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex3.jpg", import.meta.url).href,
-    new URL("../assets/Ex.home/Ex4.jpg", import.meta.url).href,
-    // ...อื่น ๆ ตามเดิม
-]);
+// ดึงภาพทั้งหมด
+const images = Object.values(
+  import.meta.glob('../assets/BRB-image/*.jpg', { eager: true, import: 'default' })
+).sort()
 
+// แบ่งเป็น 4 คอลัมน์
 const columns = computed(() => {
-    const colCount = 4;
-    const cols = Array.from({ length: colCount }, () => []);
-    images.value.forEach((img, index) => {
-        cols[index % colCount].push(img);
-    });
-    return cols;
+  const colCount = 4;
+  const cols = Array.from({ length: colCount }, () => []);
+  
+  images.forEach((img, index) => {
+    cols[index % colCount].push(img);
+  });
+  
+  return cols;
 });
+
 </script>
+
 
 <style scoped>
 .block-container {
-    width: 99vw;
+    width: 100vw;
     height: 50vh;
     display: flex;
     flex-direction: column;
@@ -118,7 +97,6 @@ const columns = computed(() => {
     background-size: cover;
     background-position: center;
     position: relative;
-    overflow: hidden;
 }
 
 .block-container::before {
@@ -157,10 +135,26 @@ const columns = computed(() => {
 }
 
 .background-block {
+    position: relative;
+    /* ✅ เพิ่มบรรทัดนี้ */
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 2rem;
-    padding: 2rem 4rem;
+    background-image: url('../assets/BRB-image/BRB-project (13).jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 2rem 2.8px;
+    z-index: 0;
+}
+
+.background-block::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(15px);
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: -1;
 }
 
 .text-section {
@@ -171,26 +165,27 @@ const columns = computed(() => {
 .text-section .title {
     font-size: 2rem;
     font-weight: 700;
-    color: #000;
+    color: #ffffff;
 }
 
 .text-section span {
-    color: #b55c00;
+     color: #ffffff;
 }
 
 .text-section .content {
     margin-top: 1.5rem;
+     color: #ffffff;
 }
 
 .text-section h3 {
-    color: #b55c00;
+    color: #ffff;
     font-size: 1.5rem;
     margin-top: 1.5rem;
 }
 
 .text-section p {
     font-size: 1.2rem;
-    color: #000;
+    color: #ffff;
 }
 
 /* ✅ Contact Item ปรับให้อยู่ในบรรทัดเดียว */
@@ -241,4 +236,106 @@ const columns = computed(() => {
     margin-top: 8px;
     border-radius: 8px;
 }
+
+@media only screen and (max-width: 820px) {
+    .text-section {
+        padding-left: 110px;
+    }
+
+    .block-container {
+        height: 30vh;
+    }
+
+    .text-section .title {
+        font-size: 1.5rem;
+    }
+
+    .text-section h3 {
+        font-size: 1.1rem;
+    }
+
+    .label {
+        font-size: 1.2rem;
+    }
+
+    .value {
+        font-size: 1rem;
+    }
+
+    .text-section p {
+        font-size: 1rem;
+    }
+
+    .column img {
+        height: 50px;
+    }
+}
+@media only screen and (max-width: 480px) {
+  .block-container {
+    height: 30vh;
+  }
+  .background-block {
+    height: 70vh;
+  }
+
+  .text {
+    font-size: 15vw;
+  }
+
+  .subtitle {
+    font-size: 4vw;
+  }
+
+  /* ✅ ซ่อนส่วนภาพ */
+  .image-section {
+    display: none;
+  }
+
+  /* ✅ ให้ข้อความกินเต็มจอ */
+  .background-block {
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+  }
+
+  .text-section {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .text-section .title {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .text-section h3 {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .text-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .contact-item {
+    flex-wrap: wrap; /* ถ้าข้อความยาวจะขึ้นบรรทัดใหม่ */
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .label {
+    font-size: 1.2rem;
+  }
+
+  .value {
+    font-size: 1rem;
+  }
+}
+
 </style>

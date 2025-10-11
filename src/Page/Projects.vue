@@ -3,6 +3,7 @@
         <NavBar/>
     </header>
     <main>
+        <Logo/>
         <ProjectComponent/>
     </main>
     <footer>

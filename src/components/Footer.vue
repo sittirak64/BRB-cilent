@@ -7,7 +7,7 @@
             </h2>
             <p>For more information, please contact : </p>
             <p>Tel : 09xx-xxx-xxx</p>
-            <p>......</p>         
+            <p>......</p>
             <button class="consult-button" @click="Contact">Consultation request</button>
         </div>
         <div class="footer-image"></div>
@@ -18,12 +18,12 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const Contact = () => {
-  router.push('/contact')
+    router.push('/contact')
 }
 </script>
 <style scoped>
 .footer-section {
-    padding-top: 50px;
+    padding-bottom: 5px;
     position: relative;
     display: flex;
     width: 100%;
@@ -37,12 +37,10 @@ const Contact = () => {
     color: white;
     flex: 1;
     /* padding: 40px; */
-    clip-path: polygon(0 0, 90% 0, 70% 100%, 0% 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
-    border-radius: 15px;
 }
 
 .footer-title {
@@ -52,12 +50,16 @@ const Contact = () => {
     display: inline-block;
     margin-bottom: 8px;
 }
-.footer-content h2 + p {
+
+.footer-content h2+p {
     margin-top: 4px;
 }
-.footer-content p + p {
-    margin-top: 4px; /* 🔹 ระยะห่างระหว่าง p กับ p */
+
+.footer-content p+p {
+    margin-top: 4px;
+    /* 🔹 ระยะห่างระหว่าง p กับ p */
 }
+
 /* ✅ เส้นใต้แบบอนิเมชัน */
 .footer-title .underline {
     position: absolute;
@@ -98,14 +100,27 @@ const Contact = () => {
     background-color: #d10000;
 }
 
-/* ✅ ด้านขวาเป็นรูปภาพ */
-.footer-image {
-    /* flex: 1; */
-    width: 50px;
-    /* background-image: url('../assets/Ex.home/Ex4.jpg'); */
-    /* เปลี่ยนเป็นรูปของคุณ */
-    /* background-size: cover; */
-    background-position: center;
-    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+
+@media only screen and (max-width: 820px) {
+   .footer-title {
+    font-size: 3.5vw;
+   } 
+    .footer-content {
+        padding-left: 15px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .footer-section {
+        display: none;
+    }
+    .footer-content {
+        padding-left: 15px;
+        clip-path: none;
+        
+    }
+    .footer-title {
+        font-size: 4vw;
+    }
 }
 </style>

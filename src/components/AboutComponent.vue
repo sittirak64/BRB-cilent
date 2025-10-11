@@ -52,11 +52,10 @@
 import { ref } from 'vue'
 
 const images = [
-    new URL('../assets/Ex.home/Ex1.jpg', import.meta.url).href,
-    new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-    new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-    new URL('../assets/Ex.home/Ex4.jpg', import.meta.url).href,
-    new URL('../assets/Ex.home/Ex1.jpg', import.meta.url).href,    
+    new URL('../assets/BRB-image/BRB-project (0).jpg', import.meta.url).href,
+    new URL('../assets/BRB-image/BRB-project (3).jpg', import.meta.url).href,
+    new URL('../assets/BRB-image/BRB-project (4).jpg', import.meta.url).href,
+    new URL('../assets/BRB-image/BRB-project (8).jpg', import.meta.url).href,
 ]
 
 const currentImage = ref(images[0])
@@ -67,7 +66,7 @@ function changeImage(img) {
 </script>
 <style scoped>
 .block-container {
-    width: 99vw;
+    width: 100vw;
     height: 50vh;
     display: flex;
     flex-direction: column;
@@ -132,44 +131,62 @@ function changeImage(img) {
 }
 
 .background-block {
+   width: 99vw;
+    height: 50vh;
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 2rem;
-    padding: 2rem 4rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../assets/Ex.home/Ex1.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.background-block::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(15px);
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: -1;
 }
 
 .text-section {
-    padding-left: 70px;
+    padding-left: 100px;
     display: inline;
     /* flex: 1; */
     max-width: 50%;
+
 }
 
 .text-section .title {
     font-size: 2rem;
     font-weight: 700;
     color: #000;
+    color: #ffffff;
 }
 
 .text-section span {
     color: #b55c00;
+    color: #ffffff;
 }
 
 .text-section .content {
     margin-top: 1.5rem;
+    
 }
 
 .text-section h3 {
-    color: #b55c00;
     font-size: 1.5rem;
     margin-top: 1.5rem;
+    color: #ffffff;
 }
 
 .text-section p {
     margin-top: 0.5rem;
     line-height: 1.6;
-    color: #333;
+    color: #ffffff;
 }
 
 .image-section {
@@ -216,5 +233,81 @@ function changeImage(img) {
 .thumbnail.active {
     opacity: 1;
     border: 2px solid #b55c00;
+}
+
+@media only screen and (max-width: 768px) {
+    .block-container {
+        width: 100vw;
+        height: 25vh;
+    }
+
+    .text {
+        font-size: 40px;
+    }
+
+    .subtitle {
+        font-size: 15px;
+    }
+
+    .text-section .title {
+        font-size: 1.5rem;
+    }
+
+    .text-section h3 {
+        font-size: 1rem;
+    }
+
+    .text-section p {
+        font-size: 15px;
+    }
+
+    .background-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .text-section {
+        padding-left: 10vw;
+        max-width: 100%;
+    }
+
+    .main-image {
+        height: 200px;
+
+    }
+
+    .thumbnail {
+        height: 50px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .block-container {
+        height: 20vh;
+    }
+
+    .text {
+        font-size: 10vw;
+    }
+
+    .subtitle {
+        font-size: 10px;
+    }
+
+    .background-block {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .text-section {
+        padding-left: 20px;
+        max-width: 100%;
+    }
+
+    .thumbnail-list {
+        padding-bottom: 7vh;
+    }
 }
 </style>

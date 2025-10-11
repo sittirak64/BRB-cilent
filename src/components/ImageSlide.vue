@@ -14,24 +14,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
-const slides = [
-    {
-        image: new URL('../assets/Ex.home/Ex1.jpg', import.meta.url).href,
-        title: 'Design and Build Your Dream Home',
-        subtitle: 'Comprehensive services from concept to completion'
-    },
-    {
-        image: new URL('../assets/Ex.home/Ex2.jpg', import.meta.url).href,
-        title: 'Quality Construction You Can Trust',
-        subtitle: 'Precision and excellence at every stage of the build'
-    },
-    {
-        image: new URL('../assets/Ex.home/Ex3.jpg', import.meta.url).href,
-        title: 'Interior Design That Reflects You',
-        subtitle: 'Personalized spaces that showcase your lifestyle'
-    }
-]
+import { slides } from  '../data/imageSlide'
 
 const currentIndex = ref(0)
 const currentSlide = computed(() => slides[currentIndex.value])
@@ -40,7 +23,7 @@ const isFading = ref(false)
 const router = useRouter()
 
 const Contact = () => {
-  router.push('/contact')
+    router.push('/contact')
 }
 
 onMounted(() => {
@@ -55,13 +38,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-    .slide-container {
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-        position: relative;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
+.slide-container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 
 .slide-wrapper {
     position: relative;
@@ -91,7 +74,7 @@ onMounted(() => {
     text-align: center;
     color: white;
     background: rgba(0, 0, 0, 0.35);
-    padding: 40px 20px;
+    padding: 40px 15px;
     border-radius: 20px;
     opacity: 0;
     transition: opacity 1s ease, transform 1s ease;
@@ -174,5 +157,40 @@ onMounted(() => {
     background-color: black;
     width: 100%;
     height: 100vh;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 60%;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+}
+
+@media only screen and (max-width: 480px) {
+    .title {
+        font-size: 4vw;
+    }
+
+    .subtitle {
+        font-size: 3vw;
+    }
+
+    .cta-button {
+        width: 60%;
+        font-size: 3vw;
+    }
 }
 </style>
