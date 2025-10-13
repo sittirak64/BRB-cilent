@@ -1,7 +1,7 @@
 <template>
     <div class="block-container">
         <div class="text">
-            <span style="font-size: 25px; color: #000;">We are</span>
+            <span style="font-size: 25px; color: #ffff;">We are</span>
             <span> Baan Rim Bueng </span>
         </div>
         <div class="subtitle">
@@ -52,10 +52,10 @@
 import { ref } from 'vue'
 
 const images = [
-    new URL('../assets/BRB-image/BRB-project (0).jpg', import.meta.url).href,
-    new URL('../assets/BRB-image/BRB-project (3).jpg', import.meta.url).href,
-    new URL('../assets/BRB-image/BRB-project (4).jpg', import.meta.url).href,
-    new URL('../assets/BRB-image/BRB-project (8).jpg', import.meta.url).href,
+    new URL('../assets/BRB-image/Origami/BRB-project (0).jpg', import.meta.url).href,
+    new URL('../assets/BRB-image/Origami/BRB-project (3).jpg', import.meta.url).href,
+    new URL('../assets/BRB-image/Origami/BRB-project (4).jpg', import.meta.url).href,
+    new URL('../assets/BRB-image/Origami/BRB-project (8).jpg', import.meta.url).href,
 ]
 
 const currentImage = ref(images[0])
@@ -74,7 +74,7 @@ function changeImage(img) {
     justify-content: center;
 
     /* พื้นหลังเป็นรูป */
-    background-image: url('../assets/Ex.home/Ex1.jpg');
+    background-image: url('../assets/BRB-image/Origami/BRB-project (13).jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -89,7 +89,7 @@ function changeImage(img) {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(0, 0, 0, 0.2);
     /* สีขาวโปร่งแสงครอบรูป */
     backdrop-filter: blur(7px);
     /* ทำให้ภาพพื้นหลังเบลอ */
@@ -101,7 +101,7 @@ function changeImage(img) {
 .subtitle {
     position: relative;
     z-index: 2;
-    color: #000;
+    color: #ffff;
     /* ปรับสีให้ชัดกับพื้นหลัง */
 }
 
@@ -109,7 +109,7 @@ function changeImage(img) {
     font-family: 'SacramentoRegular';
     font-size: 70px;
     font-weight: bold;
-    color: #b55c00;
+    color: #ff8206;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -137,7 +137,7 @@ function changeImage(img) {
     align-items: flex-start;
     justify-content: space-between;
     gap: 2rem;
-    background-image: url('../assets/BRB-image/BRB-project (13).jpg');
+    background-image: url('../assets/BRB-image/Origami/BRB-project (13).jpg');
     background-size: cover;
     background-position: center;
     padding: 2rem 2.8px;
