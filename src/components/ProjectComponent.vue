@@ -119,7 +119,7 @@ function scrollToActiveThumb() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/BRB-image/BRB-project (13).jpg');
+  background-image: url('../assets/BRB-image//Origami/BRB-project (13).jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -130,8 +130,8 @@ function scrollToActiveThumb() {
   content: "";
   position: absolute;
   inset: 0;
-  background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15px);
   z-index: 1;
 }
 
@@ -139,14 +139,14 @@ function scrollToActiveThumb() {
 .subtitle {
   position: relative;
   z-index: 2;
-  color: #000;
+  color: #fff;
 }
 
 .text {
   font-family: 'SacramentoRegular';
-  font-size: 50px;
+  font-size: 80px;
   font-weight: bold;
-  color: #b55c00;
+  color: #f57b00;
 }
 
 .subtitle {
@@ -158,11 +158,10 @@ function scrollToActiveThumb() {
 .portfolio-section {
   position: relative;
   padding: 20px 170px;
-  background-image: url('../assets/BRB-image/BRB-project (13).jpg');
+  background-image: url('../assets/BRB-image/Origami/BRB-project (13).jpg');
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  /* ป้องกันเลเยอร์ล้น */
   z-index: 0;
 }
 
@@ -171,7 +170,7 @@ function scrollToActiveThumb() {
   position: absolute;
   inset: 0;
   /* ครอบเต็มพื้นที่ */
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(15px);
   /* ✅ ทำให้พื้นหลังเบลอ */
   background-color: rgba(0, 0, 0, 0.2);
   /* ✅ เพิ่มความจาง */

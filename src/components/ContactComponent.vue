@@ -1,7 +1,7 @@
 <template>
     <div class="block-container">
         <div class="text">
-            <span style="font-size: 30px; color: #000;">Baan Rim Bueng</span>
+            <span style="font-size: 30px; color: #fff;">Baan Rim Bueng</span>
             <span> Contact </span>
         </div>
         <div class="subtitle">
@@ -67,7 +67,7 @@ import LineIcon from "../assets/IconContact/line.png";
 
 // ดึงภาพทั้งหมด
 const images = Object.values(
-  import.meta.glob('../assets/BRB-image/*.jpg', { eager: true, import: 'default' })
+  import.meta.glob('../assets/BRB-image/Origami/*.jpg', { eager: true, import: 'default' })
 ).sort()
 
 // แบ่งเป็น 4 คอลัมน์
@@ -93,7 +93,7 @@ const columns = computed(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("../assets/Ex.home/Ex1.jpg");
+    background-image: url('../assets/BRB-image/Origami/BRB-project (13).jpg');
     background-size: cover;
     background-position: center;
     position: relative;
@@ -103,8 +103,8 @@ const columns = computed(() => {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(7px);
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(15px);
     z-index: 1;
 }
 
@@ -112,14 +112,14 @@ const columns = computed(() => {
 .subtitle {
     position: relative;
     z-index: 2;
-    color: #000;
+    color: #fff;
 }
 
 .text {
     font-family: "SacramentoRegular";
     font-size: 80px;
     font-weight: bold;
-    color: #b55c00;
+    color: #ff8000;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -141,7 +141,7 @@ const columns = computed(() => {
     align-items: flex-start;
     justify-content: space-between;
     gap: 2rem;
-    background-image: url('../assets/BRB-image/BRB-project (13).jpg');
+    background-image: url('../assets/BRB-image/Origami/BRB-project (13).jpg');
     background-size: cover;
     background-position: center;
     padding: 2rem 2.8px;
@@ -197,13 +197,13 @@ const columns = computed(() => {
 }
 
 .icon {
-    width: 25px;
-    height: 25px;
+    /* width: 1vw; */
+    height: 3vh;
 }
 
 .label {
     font-size: 2rem;
-    color: #b55c00;
+    color: #ff8000;
     font-weight: 600;
 }
 
@@ -336,6 +336,12 @@ const columns = computed(() => {
   .value {
     font-size: 1rem;
   }
+}
+@media only screen and (max-width: 380px) {
+    .background-block {
+    height: 90vh;
+  }
+
 }
 
 </style>
