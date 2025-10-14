@@ -268,7 +268,7 @@ function changeImage(img) {
     }
 
     .text-section {
-        padding-left: 10vw;
+        padding-left: 15vw;
         max-width: 100%;
     }
 

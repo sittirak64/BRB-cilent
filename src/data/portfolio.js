@@ -4,11 +4,15 @@ const origamiImages = Object.values(
 ).sort()
 
 const lakeHouseImage = Object.values(
-  import.meta.glob('../assets/BRB-image/Lake-House/*.png', { eager: true, import: 'default' })
+  import.meta.glob('../assets/BRB-image/Lake-House/*.{png,jpg}', { eager: true, import: 'default' })
 ).sort()
 
 const ContemporaryTwoStorey = Object.values(
   import.meta.glob('../assets/BRB-image/Contemporary-Two-Storey/*.png', { eager: true, import: 'default' })
+).sort()
+
+const BuiltInRungrat  = Object.values(
+  import.meta.glob('../assets/BRB-image/Built-in-K.Rungrat/*.{png,jpg}', { eager: true, import: 'default' })
 ).sort()
 
 export  const portfolios = [
@@ -22,8 +26,9 @@ export  const portfolios = [
   {
     images: lakeHouseImage,
     title: 'LAKE HOUSE',
-    desc: 'Modern Luxury House (3D Model)',
-    status: 'In Progress',
+    desc: 'Modern Luxury House',
+    status: 'In Progress ',
+    updateOn :'Updated on October 08, 2025 (70%)',
     detail: 'This residence showcases a Modern Luxury architectural style, combining contemporary minimalism with sophisticated design elements. The exterior features clean lines, expansive glass panels, and a harmonious mix of premium materials such as natural stone, wood, and metal finishes — creating a sense of elegance and timeless beauty. The interior design emphasizes openness and natural light, with spacious living areas that seamlessly connect indoor and outdoor spaces. Every detail, from the custom-built furniture to the refined lighting and textures, reflects a perfect balance between comfort, functionality, and luxury. This home offers not just a place to live, but a refined lifestyle experience tailored for modern living.'
   },
   {
@@ -32,6 +37,41 @@ export  const portfolios = [
     desc: 'Renovate Two-Storey Residence (3D Model)',
     status: 'In Progress',
     detail: 'This project is a renovation of a two-storey reinforced concrete residence, located in Phuket, Thailand. The design concept focuses on blending modern aesthetics with functional living, enhancing both the visual appeal and comfort of the home. The renovation introduces a clean and contemporary style, emphasizing open spaces, natural lighting, and the use of refined materials that complement the tropical surroundings. Every element — from the façade to the interior detailing — has been carefully reimagined to create a harmonious balance between modern design and everyday practicality. The result is a warm, elegant home that reflects a refined modern lifestyle while maintaining its structural integrity and local character.'
+  },
+  {
+    images: BuiltInRungrat,
+    title: 'Built-in K.Rungrat',
+    desc: 'Built in Modern Contemporary ',
+    status: 'In Progress',
+    updateOn :'Updated on October 14, 2025 (70%)',
+    detail: 'A perfect blend of functionality and timeless elegance.The Modern Contemporary built-in design emphasizes clean lines, practical layouts, and warm, balanced tones. Each built-in piece is thoughtfully designed to fit perfectly within the space, creating a seamless harmony between form and function.This style combines the simplicity of modern design with the comfort and sophistication of contemporary living — offering a sense of luxury that feels both stylish and welcoming.Using materials such as natural wood, matte finishes, and soft lighting, the overall atmosphere feels cozy yet refined — ideal for bedrooms, living areas, and workspaces.'
+  },
+  {
+    images: [
+      new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
+    ],
+    title: 'Comming Soon',
+    desc: '',
+    status: '',
+    detail: ''
+  },
+  {
+    images: [
+      new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
+    ],
+    title: 'Comming Soon',
+    desc: '',
+    status: '',
+    detail: ''
+  },
+  {
+    images: [
+      new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
+    ],
+    title: 'Comming Soon',
+    desc: '',
+    status: '',
+    detail: ''
   },
   {
     images: [
