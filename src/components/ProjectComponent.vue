@@ -11,7 +11,12 @@
   <!-- Portfolio Cards -->
   <div class="portfolio-section">
     <div class="card-grid">
-      <div class="card" v-for="(item, index) in portfolios" :key="index" @click="openModal(item)">
+      <div
+        class="card"
+        v-for="(item, index) in portfolios"
+        :key="index"
+        @click="openModal(item)"
+      >
         <img :src="item.images[0]" alt="Portfolio" class="card-image" />
         <h3 class="card-title">{{ item.title }}</h3>
         <h4 class="card-title">{{ item.status }}</h4>
@@ -30,6 +35,7 @@
         <div class="modal-left">
           <h2 class="modal-title">{{ selectedItem.title }}</h2>
           <p class="modal-desc">{{ selectedItem.desc }}</p>
+          <p class="modal-desc">{{ selectedItem.updateOn }}</p>
           <p class="modal-detail">{{ selectedItem.detail }}</p>
         </div>
 
@@ -37,17 +43,38 @@
         <div class="modal-right">
           <div class="slideshow-container">
             <!-- Slide -->
-            <div class="slide" v-for="(img, idx) in selectedItem.images" :key="idx" v-show="idx === slideIndex">
+            <div
+              class="slide"
+              v-for="(img, idx) in selectedItem.images"
+              :key="idx"
+              v-show="idx === slideIndex"
+            >
               <img :src="img" class="slide-image" />
+
+              <!-- ✅ ป้ายประเภทภาพ (เฉพาะใน Modal) -->
+              <span
+                class="slide-label"
+                :class="getImageType(img)"
+              >
+                {{ getImageType(img) === 'real' ? 'Photo' : '3D Render' }}
+              </span>
             </div>
 
-            <p class="slide-count">{{ slideIndex + 1 }} / {{ selectedItem.images.length }}</p>
+            <p class="slide-count">
+              {{ slideIndex + 1 }} / {{ selectedItem.images.length }}
+            </p>
           </div>
 
           <!-- ✅ Thumbnail -->
           <div class="scroll-container" ref="scrollContainer">
-            <img v-for="(thumb, index) in selectedItem.images" :key="index" :src="thumb" class="scroll-image"
-              :class="{ active: index === slideIndex }" @click="setSlide(index)" />
+            <img
+              v-for="(thumb, index) in selectedItem.images"
+              :key="index"
+              :src="thumb"
+              class="scroll-image"
+              :class="{ active: index === slideIndex }"
+              @click="setSlide(index)"
+            />
           </div>
         </div>
       </div>
@@ -74,41 +101,35 @@ function closeModal() {
   showModal.value = false
 }
 
-/* ✅ ฟังก์ชันเปลี่ยนสไลด์ พร้อมจัดให้อยู่ตรงกลาง */
-function changeSlide(n) {
-  const total = selectedItem.value.images.length
-  slideIndex.value = (slideIndex.value + n + total) % total
-  scrollToActiveThumb()
-}
-
-/* ✅ ฟังก์ชันเลือกสไลด์จาก thumbnail */
 function setSlide(index) {
   slideIndex.value = index
   scrollToActiveThumb()
 }
 
-/* ✅ ฟังก์ชันจัดให้อยู่ตรงกลาง */
 function scrollToActiveThumb() {
   const container = scrollContainer.value
   if (!container) return
   const thumbnails = container.querySelectorAll('img')
   const activeThumb = thumbnails[slideIndex.value]
-
   if (activeThumb) {
-    // ✅ คำนวณตำแหน่งให้อยู่ตรงกลาง container เสมอ
     const containerWidth = container.clientWidth
     const thumbCenter = activeThumb.offsetLeft + activeThumb.offsetWidth / 2
     const scrollPosition = thumbCenter - containerWidth / 2
-
-    // ✅ ป้องกัน scrollPosition < 0 (ไม่ให้เด้งซ้ายเกินไป)
     const maxScroll = container.scrollWidth - containerWidth
     const safeScroll = Math.max(0, Math.min(scrollPosition, maxScroll))
-
     container.scrollTo({ left: safeScroll, behavior: 'smooth' })
   }
 }
 
+function getImageType(imagePath) {
+  if (!imagePath) return ''
+  const lower = imagePath.toLowerCase()
+  if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) return 'real'
+  if (lower.endsWith('.png')) return 'render'
+  return ''
+}
 </script>
+
 
 <style scoped>
 /* ---------- พื้นหลัง ---------- */
@@ -144,13 +165,13 @@ function scrollToActiveThumb() {
 
 .text {
   font-family: 'SacramentoRegular';
-  font-size: 80px;
+  font-size: 12vh;
   font-weight: bold;
   color: #f57b00;
 }
 
 .subtitle {
-  font-size: 25px;
+  font-size: 8vh;
   font-weight: 700;
 }
 
@@ -394,7 +415,82 @@ function scrollToActiveThumb() {
 .scroll-image:hover {
   opacity: 0.8;
 }
+/* ---------- การ์ด ---------- */
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
 
+.image-label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+}
+
+.image-label.real {
+  background-color: rgba(34, 139, 34, 0.7); /* เขียว Real */
+}
+
+.image-label.render {
+  background-color: rgba(255, 140, 0, 0.7); /* ส้ม 3D */
+}
+
+/* ---------- ป้ายใน Modal ---------- */
+.slide-label {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+
+.slide-label.real {
+  background-color: rgba(34, 139, 34, 0.7);
+}
+
+.slide-label.render {
+  background-color: rgba(255, 140, 0, 0.7);
+}
+
+/* ---------- Scroll Thumbnails ---------- */
+.scroll-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px;
+  border-radius: 10px;
+  width: 98%;
+  scroll-behavior: smooth;
+}
+
+.scroll-image {
+  width: 200px;
+  height: 130px;
+  margin-right: 10px;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+  border: 3px solid transparent;
+}
+
+.scroll-image.active {
+  opacity: 1;
+  border-color: #b55c00;
+  transform: scale(1.05);
+}
 @media only screen and (max-width: 1440px) {
   .slide-count {
     bottom: 30vh;
@@ -403,6 +499,12 @@ function scrollToActiveThumb() {
 }
 
 @media only screen and (max-width: 820px) {
+  .text {
+    font-size: 4vh;
+  }
+  .subtitle {
+    font-size: 4vh;
+  }
   .portfolio-section {
     padding: 50px 120px;
   }

@@ -200,13 +200,23 @@ watch(
 }
 
 /* 📱 มือถือ: แสดง icon-only */
-@media only screen and (max-width: 820px) {
+
+@media only screen and (max-width: 1180px) {
   .sidebar {
     width: 80px;
     height: auto;
     top: 30%;
     left: 20px;
     border-radius: 15px;
+  }
+
+  .nav-links li a span {
+    display: none;
+    /* 🔥 ซ่อนชื่อเมนู */
+  }
+
+  .nav-links li a:hover {
+    width: 4vw;
   }
 
   .sidebar-content {
