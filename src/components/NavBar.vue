@@ -201,7 +201,7 @@ watch(
 
 /* 📱 มือถือ: แสดง icon-only */
 
-@media only screen and (max-width: 1180px) {
+@media only screen and (max-width: 1400px) {
   .sidebar {
     width: 80px;
     height: auto;
