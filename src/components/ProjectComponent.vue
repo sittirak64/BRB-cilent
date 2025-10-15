@@ -17,7 +17,7 @@
         :key="index"
         @click="openModal(item)"
       >
-        <img :src="item.images[0]" alt="Portfolio" class="card-image" />
+        <img :src="item.imageProfile" alt="Portfolio" class="card-image" />
         <h3 class="card-title">{{ item.title }}</h3>
         <h4 class="card-title">{{ item.status }}</h4>
         <p class="card-desc">{{ item.desc }}</p>
@@ -126,8 +126,8 @@ function getImageType(imagePath) {
   const lower = imagePath.toLowerCase()
   if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) return 'real'
   if (lower.endsWith('.png')) return 'render'
-  return ''
-}
+  return 'real' // ค่า default เป็น real
+} 
 </script>
 
 
@@ -140,7 +140,7 @@ function getImageType(imagePath) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/BRB-image//Origami/BRB-project (13).jpg');
+  background-image: url('../assets/BRB-image//Origami/BRB-project (5).jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -152,7 +152,7 @@ function getImageType(imagePath) {
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(8px);
   z-index: 1;
 }
 
@@ -179,7 +179,7 @@ function getImageType(imagePath) {
 .portfolio-section {
   position: relative;
   padding: 20px 170px;
-  background-image: url('../assets/BRB-image/Origami/BRB-project (13).jpg');
+  background-image: url('../assets/BRB-image/Origami/BRB-project (5).jpg');
   background-size: cover;
   background-position: center;
   overflow: hidden;
