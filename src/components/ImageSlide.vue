@@ -158,7 +158,11 @@ onMounted(() => {
     width: 100%;
     height: 100vh;
 }
-
+@media only screen and (max-width: 1366px) {
+  .title {
+    font-size: 3vw;
+  }
+}
 @media only screen and (max-width: 768px) {
 
     .overlay {

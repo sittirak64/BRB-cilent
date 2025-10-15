@@ -497,6 +497,11 @@ function getImageType(imagePath) {
   }
 
 }
+@media only screen and (max-width: 1366px) {
+  .card {
+    width: 25vw;
+  }
+}
 
 @media only screen and (max-width: 820px) {
   .text {
