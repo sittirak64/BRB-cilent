@@ -52,9 +52,9 @@
 import { ref } from 'vue'
 
 const images = [
-    new URL('../assets/BRB-image/Origami/BRB-project (0).jpg', import.meta.url).href,
+    new URL('../assets/BRB-image/Origami/BRB-project (2).jpg', import.meta.url).href,
     new URL('../assets/BRB-image/Origami/BRB-project (3).jpg', import.meta.url).href,
-    new URL('../assets/BRB-image/Origami/BRB-project (4).jpg', import.meta.url).href,
+    new URL('../assets/BRB-image/Origami/BRB-project (7).jpg', import.meta.url).href,
     new URL('../assets/BRB-image/Origami/BRB-project (8).jpg', import.meta.url).href,
 ]
 
@@ -74,7 +74,7 @@ function changeImage(img) {
     justify-content: center;
 
     /* พื้นหลังเป็นรูป */
-    background-image: url('../assets/BRB-image/Origami/BRB-project (13).jpg');
+    background-image: url('../assets/BRB-image/Origami/BRB-project (5).jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -137,7 +137,7 @@ function changeImage(img) {
     align-items: flex-start;
     justify-content: space-between;
     gap: 2rem;
-    background-image: url('../assets/BRB-image/Origami/BRB-project (13).jpg');
+    background-image: url('../assets/BRB-image/Origami/BRB-project (5).jpg');
     background-size: cover;
     background-position: center;
     padding: 2rem 2.8px;
