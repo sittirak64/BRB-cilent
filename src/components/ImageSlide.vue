@@ -5,7 +5,7 @@
             <div class="overlay" :class="{ show: !isFading }">
                 <h1 class="title">{{ currentSlide.title }}</h1>
                 <p class="subtitle">{{ currentSlide.subtitle }}</p>
-                <button class="cta-button" @click="Contact">Contact Us</button>
+                <button class="cta-button" @click="Contact">{{ currentSlide.contact }}</button>
             </div>
         </div>
     </div>
@@ -17,25 +17,42 @@ import { useRouter } from 'vue-router'
 import { slides } from  '../data/imageSlide'
 
 const currentIndex = ref(0)
-const currentSlide = computed(() => slides[currentIndex.value])
 const isFading = ref(false)
-
 const router = useRouter()
 
-const Contact = () => {
-    router.push('/contact')
-}
+// อ่านภาษาใน sessionStorage
+const lang = ref(sessionStorage.getItem('lang') || 'en')
 
+// ฟัง event ปุ่มเปลี่ยนภาษา
 onMounted(() => {
-    setInterval(() => {
-        isFading.value = true
-        setTimeout(() => {
-            currentIndex.value = (currentIndex.value + 1) % slides.length
-            isFading.value = false
-        }, 800)
-    }, 5000)
+  window.addEventListener('language-changed', e => {
+    lang.value = e.detail
+  })
+  setInterval(() => {
+    isFading.value = true
+    setTimeout(() => {
+      currentIndex.value = (currentIndex.value + 1) % slides.length
+      isFading.value = false
+    }, 800)
+  }, 5000)
 })
+
+// computed current slide ตามภาษา
+const currentSlide = computed(() => {
+  const slide = slides[currentIndex.value]
+  return {
+    image: slide.image,
+    title: slide.translations[lang.value].title,
+    subtitle: slide.translations[lang.value].subtitle,
+    contact: slide.translations[lang.value].contact
+  }
+})
+
+const Contact = () => {
+  router.push('/contact')
+}
 </script>
+
 
 <style scoped>
 .slide-container {

@@ -2,10 +2,12 @@
   <aside class="sidebar" :class="{ collapsed: isCollapsed }" @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave">
     <div class="sidebar-content">
-      <div class="logo">
-        <router-link to="/homepage">
-          <img :src="ImgLogo" alt="Logo" class="logo-img" :class="{ small: isCollapsed }" />
-        </router-link>
+      <div >
+        <div class="logo">
+          <router-link to="/homepage">
+            <img :src="ImgLogo" alt="Logo" class="logo-img" :class="{ small: isCollapsed }" />
+          </router-link>
+        </div>
       </div>
 
       <ul class="nav-links">
@@ -13,7 +15,7 @@
           <router-link :to="link.path" :class="{ active: isActive(link.path) }">
             <img :src="link.icon" alt="" class="icon" />
             <!-- ✅ แสดงชื่อเฉพาะตอนที่ไม่ย่อ และไม่ใช่มือถือ -->
-            <span v-if="!isCollapsed && !isMobile">{{ link.name }}</span>
+            <span v-if="!isCollapsed && !isMobile">{{ getMenuName(link) }}</span>
           </router-link>
         </li>
       </ul>
@@ -24,26 +26,46 @@
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
+
+// 🔹 Import รูป icon
 import homeIcon from '../assets/IconNavBar/home-icon-silhouette.png'
 import projectIcon from '../assets/IconNavBar/IconBluePrint.png'
 import aboutIcon from '../assets/IconNavBar/IconAbout.png'
 import contactIcon from '../assets/IconNavBar/IconContact-us.png'
-import ImgLogo from '../assets/logo/BRB-logo.png'
+import ImgLogo from '../assets/logo/favIcon-BRB.jpg'
 
 const route = useRoute()
-const isCollapsed = ref(false) // ✅ เริ่มต้นให้ขยาย
+const isCollapsed = ref(false)
 const isMobile = ref(false)
 const hasMouse = ref(true)
-const isNavigating = ref(false) // ใช้ป้องกันการย่อระหว่างเปลี่ยนหน้า
+const isNavigating = ref(false)
 
+// ✅ โหลดภาษาปัจจุบันจาก sessionStorage
+const currentLang = ref(sessionStorage.getItem('lang') || 'en')
+
+// ✅ รายการเมนู 2 ภาษา
 const links = ref([
-  { name: 'Home', path: '/homepage', icon: homeIcon },
-  { name: 'Projects', path: '/projects', icon: projectIcon },
-  { name: 'About Us', path: '/about', icon: aboutIcon },
-  { name: 'Contact', path: '/contact', icon: contactIcon },
+  { nameEn: 'Home', nameTh: 'หน้าแรก', path: '/homepage', icon: homeIcon },
+  { nameEn: 'Projects', nameTh: 'โครงการ', path: '/projects', icon: projectIcon },
+  { nameEn: 'About Us', nameTh: 'เกี่ยวกับเรา', path: '/about', icon: aboutIcon },
+  { nameEn: 'Contact', nameTh: 'ติดต่อเรา', path: '/contact', icon: contactIcon },
 ])
+
+// ✅ ใช้ฟังก์ชันเลือกชื่อเมนูตามภาษา
+const getMenuName = (link) => {
+  return currentLang.value === 'th' ? link.nameTh : link.nameEn
+}
+
+// ✅ ตรวจสอบ route ปัจจุบัน
 const isActive = (path) => route.path === path
-// ตรวจอุปกรณ์
+
+// ✅ ฟัง event เมื่อภาษาเปลี่ยนจาก LangSwitcher
+const handleLanguageChange = (event) => {
+  currentLang.value = event.detail
+  sessionStorage.setItem('lang', currentLang.value)
+}
+
+// ✅ ตรวจอุปกรณ์และกำหนดการย่อ/ขยาย
 const checkDevice = () => {
   const width = window.innerWidth
   const pointerType = window.matchMedia('(pointer: fine)').matches
@@ -52,21 +74,24 @@ const checkDevice = () => {
   hasMouse.value = pointerType
 
   if (isMobile.value) {
-    isCollapsed.value = true // มือถือเริ่มต้นให้ย่อ
+    isCollapsed.value = true // มือถือเริ่มต้นย่อ
   } else {
-    isCollapsed.value = false // ✅ desktop เริ่มต้นให้ขยาย
+    isCollapsed.value = false // Desktop เริ่มต้นขยาย
   }
 }
 
 onMounted(() => {
   checkDevice()
   window.addEventListener('resize', checkDevice)
-})
-onUnmounted(() => {
-  window.removeEventListener('resize', checkDevice)
+  window.addEventListener('language-changed', handleLanguageChange)
 })
 
-// Hover เฉพาะ desktop เท่านั้น
+onUnmounted(() => {
+  window.removeEventListener('resize', checkDevice)
+  window.removeEventListener('language-changed', handleLanguageChange)
+})
+
+// ✅ Hover เฉพาะ desktop
 const handleMouseEnter = () => {
   if (hasMouse.value && window.innerWidth > 768) {
     isCollapsed.value = false
@@ -79,21 +104,19 @@ const handleMouseLeave = () => {
   }
 }
 
-// ✅ ขยาย sidebar ทุกครั้งเมื่อเปลี่ยนหน้า
+// ✅ ทุกครั้งที่เปลี่ยนหน้า ให้ขยาย sidebar ชั่วคราว
 watch(
   () => route.path,
   () => {
     isNavigating.value = true
-    isCollapsed.value = false // 🔹 ให้ขยาย bar ทุกครั้งที่ route เปลี่ยน
-
+    isCollapsed.value = false
     setTimeout(() => {
       isNavigating.value = false
-    }, 600) // รอให้ transition จบ
+    }, 600)
   }
 )
 
 </script>
-
 <style scoped>
 .sidebar {
   position: fixed;
@@ -127,7 +150,23 @@ watch(
   transition: all 0.3s ease;
   width: 100%;
 }
+.logo-circle {
+  background-color: white;       /* 🔹 พื้นหลังวงกลมสีขาว */
+  border-radius: 15%;          
+  width: 65px;                   /* ขนาดของวงกลม */
+  height: 65px;
+  display: flex;                 /* จัดให้รูปอยู่ตรงกลาง */
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2); 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
 
+.logo-circle:hover {
+  transform: scale(1.3);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
 .logo {
   margin-bottom: 40px;
   display: flex;
@@ -137,7 +176,7 @@ watch(
 
 .logo-img {
   width: 100px;
-  border-radius: 15px;
+  border-radius: 15%;
   transition: all 0.3s ease;
 }
 

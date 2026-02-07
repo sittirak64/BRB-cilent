@@ -1,6 +1,7 @@
 <template>
   <header>
     <NavBar />
+    <LanguageSwitcher/>
     <Logo />
   </header>
   <div>
