@@ -1,9 +1,10 @@
 <template>
     <header>
         <NavBar/>
+        <LanguageSwitcher/>
+        <Logo/>
     </header>
     <main>
-        <Logo/>
         <ProjectComponent/>
     </main>
     <footer>

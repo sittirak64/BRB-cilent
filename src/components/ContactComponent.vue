@@ -22,26 +22,26 @@
                 <div class="contact-item">
                     <img :src="CallIcon" alt="Call Icon" class="icon" />
                     <span class="label">Call :</span>
-                    <p class="value">09xx-xxx-xxx</p>
+                    <p class="value">062-794-6628</p>
                 </div>
 
                 <div class="contact-item">
                     <img :src="LineIcon" alt="Line Icon" class="icon" />
                     <span class="label">Line :</span>
-                    <p class="value">@0000xxxxx</p>
+                    <p class="value">win692456</p>
                 </div>
 
                 <div class="contact-item">
                     <img :src="GmailIcon" alt="Gmail Icon" class="icon" />
                     <span class="label">Email :</span>
-                    <p class="value">sxxxxxxxxx@email.com</p>
+                    <p class="value">Padcharee.ur@gmail.com</p>
                 </div>
 
-                <div class="contact-item">
+                <!-- <div class="contact-item">
                     <img :src="FacebookIcon" alt="Facebook Icon" class="icon" />
                     <span class="label">Facebook :</span>
                     <p class="value">xxxxxxxxxxxxxxxxxx</p>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -57,32 +57,47 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 
-// ไอคอน
+// 🔹 ไอคอน
 import FacebookIcon from "../assets/IconContact/facebook.png";
 import GmailIcon from "../assets/IconContact/gmail.png";
 import CallIcon from "../assets/IconContact/telephone-call.png";
 import LineIcon from "../assets/IconContact/line.png";
 
-// ดึงภาพทั้งหมด
+// 🔹 ดึงภาพทั้งหมด
 const images = Object.values(
   import.meta.glob('../assets/BRB-image/Origami/*.jpg', { eager: true, import: 'default' })
-).sort()
+).sort();
 
-// แบ่งเป็น 4 คอลัมน์
-const columns = computed(() => {
-  const colCount = 4;
-  const cols = Array.from({ length: colCount }, () => []);
-  
-  images.forEach((img, index) => {
-    cols[index % colCount].push(img);
-  });
-  
-  return cols;
+// 🔹 เก็บความกว้างหน้าจอ
+const screenWidth = ref(window.innerWidth);
+
+// 🔹 ฟังก์ชันอัปเดตเมื่อ resize
+const updateWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
+
+// 🔹 ฟัง event resize
+onMounted(() => window.addEventListener("resize", updateWidth));
+onUnmounted(() => window.removeEventListener("resize", updateWidth));
+
+// 🔹 คำนวณจำนวนคอลัมน์ตามขนาดหน้าจอ
+const colCount = computed(() => {
+  if (screenWidth.value <= 820) return 3; // 💻 แท็บเล็ต
+  return 4; // 🖥️ Desktop
 });
 
+// 🔹 จัดรูปภาพลงคอลัมน์
+const columns = computed(() => {
+  const cols = Array.from({ length: colCount.value }, () => []);
+  images.forEach((img, index) => {
+    cols[index % colCount.value].push(img);
+  });
+  return cols;
+});
 </script>
+
 
 
 <style scoped>
@@ -179,12 +194,12 @@ const columns = computed(() => {
 
 .text-section h3 {
     color: #ffff;
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin-top: 1.5rem;
 }
 
 .text-section p {
-    font-size: 1.2rem;
+    font-size: 1.9rem;
     color: #ffff;
 }
 
@@ -208,7 +223,7 @@ const columns = computed(() => {
 }
 
 .value {
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #000;
 }
 
@@ -267,7 +282,10 @@ const columns = computed(() => {
     }
 
     .column img {
-        height: 50px;
+        height: 60px;
+    }
+    .image-section {
+        max-height: 500px;
     }
 }
 @media only screen and (max-width: 480px) {
@@ -339,7 +357,7 @@ const columns = computed(() => {
 }
 @media only screen and (max-width: 380px) {
     .background-block {
-    height: 90vh;
+    height: 80vh;
   }
 
 }

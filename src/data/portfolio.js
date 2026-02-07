@@ -1,6 +1,9 @@
 // portfolios.js
 const origamiImages = Object.values(
-  import.meta.glob('../assets/BRB-image/Origami/*.jpg', { eager: true, import: 'default' })
+  import.meta.glob("../assets/BRB-image/Origami/*.jpg", {
+    eager: true,
+    import: "default",
+  })
 ).sort((a, b) => {
   const numA = parseInt(a.match(/\((\d+)\)/)?.[1] || 0);
   const numB = parseInt(b.match(/\((\d+)\)/)?.[1] || 0);
@@ -8,112 +11,171 @@ const origamiImages = Object.values(
 });
 
 const lakeHouseImage = Object.values(
-  import.meta.glob('../assets/BRB-image/Lake-House/*.{png,jpg}', { eager: true, import: 'default' })
-).sort()
+  import.meta.glob("../assets/BRB-image/Lake-House/*.{png,jpg}", {
+    eager: true,
+    import: "default",
+  })
+).sort();
 
 const ContemporaryTwoStorey = Object.values(
-  import.meta.glob('../assets/BRB-image/Contemporary-Two-Storey/*.png', { eager: true, import: 'default' })
-).sort()
+  import.meta.glob("../assets/BRB-image/Contemporary-Two-Storey/*.png", {
+    eager: true,
+    import: "default",
+  })
+).sort();
 
-const BuiltInRungrat  = Object.values(
-  import.meta.glob('../assets/BRB-image/Built-in-K.Rungrat/*.{png,jpg}', { eager: true, import: 'default' })
+const BuiltInRungrat = Object.values(
+  import.meta.glob("../assets/BRB-image/Built-in-K.Rungrat/*.{png,jpg}", {
+    eager: true,
+    import: "default",
+  })
 ).sort((a, b) => {
   const numA = parseInt(a.match(/\((\d+)\)/)?.[1] || 0);
   const numB = parseInt(b.match(/\((\d+)\)/)?.[1] || 0);
   return numA - numB;
 });
 
-const renovateByran  = Object.values(
-  import.meta.glob('../assets/BRB-image/Bryan/*.{png,jpg}', { eager: true, import: 'default' })
+const renovateByran = Object.values(
+  import.meta.glob("../assets/BRB-image/Bryan/*.{png,jpg}", {
+    eager: true,
+    import: "default",
+  })
 ).sort((a, b) => {
   const numA = parseInt(a.match(/\((\d+)\)/)?.[1] || 0);
   const numB = parseInt(b.match(/\((\d+)\)/)?.[1] || 0);
   return numA - numB;
 });
 
-export  const portfolios = [
+export const portfolios = [
   {
-    imageProfile :new URL('../assets/BRB-image/Origami/BRB-project (2).jpg', import.meta.url).href,
+    imageProfile: new URL(
+      "../assets/BRB-image/Origami/BRB-project (2).jpg",
+      import.meta.url
+    ).href,
     images: origamiImages,
-    title: 'Origami Cottage',
-    status: 'Completed',
-    desc: 'Contemporary Minimal',
-    detail: 'One of the projects we hold in the highest regard and take great pride in.The design concept began with sketches and model studies to explore the form and function of the space. Inspiration came from the art of Japanese paper folding, which informed the lines, proportions, and perspectives of the cottage, giving it a simple yet clearly articulated rhythm, and ultimately inspiring the name “Origami Cottage.”The interior is designed to feel open and naturally connected. The living hall integrates the lounge, kitchen, and dining area in an open-plan layout, ensuring continuity of use and visual flow. A small bedroom was added under the high roof above the garage, repurposing a space that was originally intended as an additional lounge, adding depth and variety without increasing the overall footprint.The cottage includes three bedrooms, three bathrooms, a garage, and a swimming pool. Overall, the home conveys a sense of simplicity and liveliness, with natural light that shifts throughout the day, enhancing the spatial experience.With the freedom granted by the owner, combined with their attention to detail throughout the process, the result is a project that embodies both enjoyment and warmth, while maintaining a sense of order and refinement throughout the home.'
+    translations: {
+      en: {
+        title: "Origami Cottage",
+        status: "Completed",
+        desc: "Contemporary Minimal",
+        detail:
+          "This is one of our most cherished projects. The concept began with sketches and model studies inspired by Japanese origami — reflected in the lines, proportions, and rhythms of the cottage. The design promotes openness and natural connection, featuring an airy living hall that integrates the lounge, kitchen, and dining area. A small bedroom was cleverly added above the garage without expanding the footprint. The house includes three bedrooms, three bathrooms, a garage, and a swimming pool — exuding simplicity, liveliness, and balance through natural light. With the owner's trust and attention to detail, the result is a project that feels both joyful and refined.",
+      },
+      th: {
+        title: "ออริกามิ คอทเทจ (Origami Cottage)",
+        status: "สำเร็จโครงการ",
+        desc: "สไตล์ร่วมสมัยมินิมอล",
+        detail:
+          "หนึ่งในผลงานที่เราภูมิใจที่สุด จุดเริ่มต้นของแนวคิดการออกแบบเกิดจากแบบร่างและโมเดลต้นแบบ โดยได้รับแรงบันดาลใจจากศิลปะการพับกระดาษแบบญี่ปุ่น (Origami) ซึ่งถ่ายทอดออกมาในเส้นสาย สัดส่วน และจังหวะของอาคาร ภายในออกแบบให้โปร่งโล่ง เชื่อมต่อกับธรรมชาติอย่างเป็นอิสระ พื้นที่โถงกลางรวมฟังก์ชันนั่งเล่น ครัว และรับประทานอาหารไว้ในพื้นที่เดียวกัน เพิ่มห้องนอนเล็กบริเวณใต้หลังคาเหนือโรงรถโดยไม่ขยายพื้นที่อาคาร ทำให้บ้านดูมีมิติและสมดุลยิ่งขึ้น บ้านหลังนี้ประกอบด้วย 3 ห้องนอน 3 ห้องน้ำ โรงจอดรถ และสระว่ายน้ำ ถ่ายทอดความเรียบง่าย อบอุ่น และมีชีวิตชีวา ด้วยแสงธรรมชาติที่เปลี่ยนไปในแต่ละช่วงวัน เจ้าของบ้านเปิดโอกาสให้เราออกแบบอย่างอิสระ จึงได้ผลงานที่เต็มไปด้วยความสุข ความละเอียด และความประณีตในทุกมุมมองของบ้านนี้",
+      },
+    },
   },
   {
-    imageProfile :new URL('../assets/BRB-image/Lake-House/Lake-House (66).png', import.meta.url).href,
+    imageProfile: new URL(
+      "../assets/BRB-image/Lake-House/Lake-House (66).png",
+      import.meta.url
+    ).href,
     images: lakeHouseImage,
-    title: 'LAKE HOUSE',
-    desc: 'Modern Luxury House',
-    status: 'In Progress ',
-    updateOn :'Updated on October 08, 2025 (70%)',
-    detail: 'This residence showcases a Modern Luxury architectural style, combining contemporary minimalism with sophisticated design elements. The exterior features clean lines, expansive glass panels, and a harmonious mix of premium materials such as natural stone, wood, and metal finishes — creating a sense of elegance and timeless beauty. The interior design emphasizes openness and natural light, with spacious living areas that seamlessly connect indoor and outdoor spaces. Every detail, from the custom-built furniture to the refined lighting and textures, reflects a perfect balance between comfort, functionality, and luxury. This home offers not just a place to live, but a refined lifestyle experience tailored for modern living.'
+    translations: {
+      en: {
+        title: "Lake House",
+        status: "In Progress (70%)",
+        desc: "Modern Luxury House",
+        updateOn: "Updated on October 08, 2025",
+        detail:
+          "This residence showcases a Modern Luxury style — a fusion of elegance, simplicity, and contemporary design. The architecture features clean lines, large glass panels, and a refined mix of materials like stone, wood, and metal. The interior emphasizes openness and natural light, offering a sense of seamless flow between indoor and outdoor spaces. Every element reflects a balance of comfort, function, and sophistication — providing a lifestyle that’s both modern and timeless.",
+      },
+      th: {
+        title: "เลค เฮาส์ (Lake House)",
+        status: "ระหว่างดำเนินการ (70%)",
+        desc: "บ้านหรูสไตล์โมเดิร์น",
+        updateOn: "อัปเดตเมื่อ 8 ตุลาคม 2025",
+        detail:
+          "บ้านพักอาศัยหลังนี้นำเสนอความหรูหราในแบบ Modern Luxury ที่ผสมผสานความเรียบง่ายร่วมสมัยเข้ากับความสง่างามเหนือกาลเวลา โดดเด่นด้วยเส้นสายที่คมชัด ช่องกระจกขนาดใหญ่ และวัสดุคุณภาพสูง เช่น หินธรรมชาติ ไม้ และโลหะ ภายในเน้นความโปร่งสบาย เชื่อมโยงพื้นที่ภายในและภายนอกอย่างลงตัว ทุกองค์ประกอบตั้งแต่เฟอร์นิเจอร์ ไปจนถึงแสงไฟ ล้วนออกแบบอย่างพิถีพิถันเพื่อสร้างสมดุลระหว่างความสะดวกสบาย ฟังก์ชัน และความหรูหรา",
+      },
+    },
   },
   {
-    imageProfile :new URL('../assets/BRB-image/Contemporary-Two-Storey/Renovate Two-Storey Residence (1).png', import.meta.url).href,
+    imageProfile: new URL(
+      "../assets/BRB-image/Contemporary-Two-Storey/Renovate Two-Storey Residence (1).png",
+      import.meta.url
+    ).href,
     images: ContemporaryTwoStorey,
-    title: 'Contemporary Two-Storey',
-    desc: 'Renovate Two-Storey Residence (3D Model)',
-    status: 'In Progress',
-    updateOn :'Updated in Coming soon',
-    detail: 'This project is a renovation of a two-storey reinforced concrete residence, located in Phuket, Thailand. The design concept focuses on blending modern aesthetics with functional living, enhancing both the visual appeal and comfort of the home. The renovation introduces a clean and contemporary style, emphasizing open spaces, natural lighting, and the use of refined materials that complement the tropical surroundings. Every element — from the façade to the interior detailing — has been carefully reimagined to create a harmonious balance between modern design and everyday practicality. The result is a warm, elegant home that reflects a refined modern lifestyle while maintaining its structural integrity and local character.'
+    translations: {
+      en: {
+        title: "Contemporary Two-Storey",
+        desc: "Renovate Two-Storey Residence (3D Model)",
+        status: "In Progress",
+        updateOn: "Coming Soon",
+        detail:
+          "A renovation project for a two-storey reinforced concrete home in Phuket. The concept blends modern aesthetics with functional living, enhancing both beauty and comfort. The design highlights openness, natural lighting, and materials that harmonize with the tropical environment, creating a refined yet welcoming modern home.",
+      },
+      th: {
+        title: "เรโนเวต บ้านสองชั้นร่วมสมัย",
+        desc: "แบบจำลอง 3D ของโครงการปรับปรุงบ้านสองชั้น",
+        status: "ระหว่างดำเนินการ",
+        updateOn: "เร็วๆ นี้",
+        detail:
+          "โครงการรีโนเวตบ้านพักอาศัยคอนกรีตเสริมเหล็กสองชั้น จังหวัดภูเก็ต แนวคิดการออกแบบมุ่งเน้นความสวยงามแบบร่วมสมัยควบคู่กับฟังก์ชันการใช้งานที่ตอบโจทย์ เพิ่มความโปร่งโล่งและแสงธรรมชาติ พร้อมเลือกใช้วัสดุที่เข้ากับบรรยากาศเขตร้อน ผลลัพธ์คือบ้านที่ดูทันสมัย อบอุ่น และกลมกลืนกับสภาพแวดล้อม",
+      },
+    },
   },
   {
-    imageProfile :new URL('../assets/BRB-image/Built-in-K.Rungrat/Project (8).png', import.meta.url).href,
+    imageProfile: new URL(
+      "../assets/BRB-image/Built-in-K.Rungrat/Project (8).png",
+      import.meta.url
+    ).href,
     images: BuiltInRungrat,
-    title: 'Built-in',
-    desc: 'Built in Modern Contemporary ',
-    status: 'In Progress',
-    updateOn :'Updated on October 14, 2025 (70%)',
-    detail: 'A perfect blend of functionality and timeless elegance.The Modern Contemporary built-in design emphasizes clean lines, practical layouts, and warm, balanced tones. Each built-in piece is thoughtfully designed to fit perfectly within the space, creating a seamless harmony between form and function.This style combines the simplicity of modern design with the comfort and sophistication of contemporary living — offering a sense of luxury that feels both stylish and welcoming.Using materials such as natural wood, matte finishes, and soft lighting, the overall atmosphere feels cozy yet refined — ideal for bedrooms, living areas, and workspaces.'
+    translations: {
+      en: {
+        title: "Built-in Design",
+        desc: "Modern Contemporary Built-in",
+        status: "In Progress (70%)",
+        updateOn: "Updated on October 14, 2025",
+        detail:
+          "A blend of function and elegance. The built-in design uses clean lines, balanced tones, and smart spatial arrangements to create harmony between form and function. Combining modern simplicity with warm, refined comfort, it offers timeless sophistication perfect for living rooms, bedrooms, and workspaces.",
+      },
+      th: {
+        title: "งานบิลท์อิน สไตล์โมเดิร์นคอนเทมโพรารี่",
+        desc: "บิลท์อินร่วมสมัยที่ลงตัว",
+        status: "ระหว่างดำเนินการ (70%)",
+        updateOn: "อัปเดตเมื่อ 14 ตุลาคม 2025",
+        detail:
+          "การผสมผสานอย่างลงตัวระหว่างฟังก์ชันและความสวยงาม การออกแบบบิลท์อินเน้นเส้นสายที่เรียบง่าย โทนสีอบอุ่น และการจัดสรรพื้นที่ใช้งานอย่างชาญฉลาด ผสานความเรียบหรูแบบโมเดิร์นเข้ากับความอบอุ่นร่วมสมัย เหมาะกับห้องนอน ห้องนั่งเล่น และพื้นที่ทำงานอย่างลงตัว",
+      },
+    },
   },
   {
-    imageProfile :new URL('../assets/BRB-image//Bryan/Byran (37).png', import.meta.url).href,
-    images: renovateByran ,
-    title: 'Contemporary Two-Storey',
-    desc: 'Renovate Two-Storey Residence (3D Model)',
-    updateOn :'Updated in Coming soon',
-    status: 'In Progress',
-    detail: 'This project is a renovation of a two-storey reinforced concrete residence, located in Phuket, Thailand. The design concept focuses on blending modern aesthetics with functional living, enhancing both the visual appeal and comfort of the home. The renovation introduces a clean and contemporary style, emphasizing open spaces, natural lighting, and the use of refined materials that complement the tropical surroundings. Every element — from the façade to the interior detailing — has been carefully reimagined to create a harmonious balance between modern design and everyday practicality. The result is a warm, elegant home that reflects a refined modern lifestyle while maintaining its structural integrity and local character.'
+    imageProfile: new URL(
+      "../assets/BRB-image/Bryan/Byran (37).png",
+      import.meta.url
+    ).href,
+    images: renovateByran,
+    translations: {
+      en: {
+        title: "Bryan Residence",
+        desc: "Renovate Two-Storey House (3D Model)",
+        status: "In Progress",
+        updateOn: "Coming Soon",
+        detail:
+          "A two-storey home renovation focusing on modern aesthetics and comfort. The design enhances natural light, openness, and harmony with the tropical surroundings for a cozy, elegant living experience.",
+      },
+      th: {
+        title: "โครงการรีโนเวตบ้านสองชั้น ไบรอัน",
+        desc: "แบบจำลอง 3D ของโครงการรีโนเวตบ้านสองชั้น",
+        status: "ระหว่างดำเนินการ",
+        updateOn: "เร็วๆ นี้",
+        detail:
+          "โครงการรีโนเวตบ้านสองชั้นที่เน้นความเรียบหรูแบบร่วมสมัย เพิ่มความโปร่งโล่งและแสงธรรมชาติ พร้อมบรรยากาศอบอุ่นและกลมกลืนกับธรรมชาติรอบข้าง เพื่อสร้างบ้านที่ทั้งสวยงามและน่าอยู่",
+      },
+    },
   },
   {
-    imageProfile :  new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
-    images: [
-      new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
-    ],
-    title: 'Coming Soon',
-    desc: '',
-    status: '',
-    detail: ''
+    imageProfile: new URL("../assets/logo/BRB-logo.png", import.meta.url).href,
+    images: [new URL("../assets/logo/BRB-logo.png", import.meta.url).href],
+    translations: {
+      en: { title: "Coming Soon", desc: "", status: "", detail: "" },
+      th: { title: "เร็ว ๆ นี้", desc: "", status: "", detail: "" },
+    },
   },
-  {
-    imageProfile :  new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
-    images: [
-      new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
-    ],
-    title: 'Coming Soon',
-    desc: '',
-    status: '',
-    detail: ''
-  },
-  {
-    imageProfile :  new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
-    images: [
-      new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
-    ],
-    title: 'Coming Soon',
-    desc: '',
-    status: '',
-    detail: ''
-  },
-  {
-    imageProfile :  new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
-    images: [
-      new URL('../assets/logo/BRB-logo.png', import.meta.url).href,
-    ],
-    title: 'Coming Soon',
-    desc: '',
-    status: '',
-    detail: ''
-  },
-]
+];

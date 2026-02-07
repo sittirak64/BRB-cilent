@@ -7,7 +7,7 @@
             </h2>
             <p>For more information, please contact : </p>
             <p>Tel : 09xx-xxx-xxx</p>
-            <p>......</p>
+            <p>Gmail :........................   Line </p>
             <button class="consult-button" @click="Contact">Consultation request</button>
         </div>
         <div class="footer-image"></div>
@@ -48,7 +48,7 @@ const Contact = () => {
     font-weight: bold;
     position: relative;
     display: inline-block;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .footer-content h2+p {
@@ -62,7 +62,7 @@ const Contact = () => {
 
 /* ✅ เส้นใต้แบบอนิเมชัน */
 .footer-title .underline {
-    position: absolute;
+    position: absolute; 
     left: 0;
     bottom: -5px;
     width: 0%;

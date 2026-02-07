@@ -11,12 +11,7 @@
   <!-- Portfolio Cards -->
   <div class="portfolio-section">
     <div class="card-grid">
-      <div
-        class="card"
-        v-for="(item, index) in portfolios"
-        :key="index"
-        @click="openModal(item)"
-      >
+      <div class="card" v-for="(item, index) in translatedPortfolios" :key="index" @click="openModal(item)">
         <img :src="item.imageProfile" alt="Portfolio" class="card-image" />
         <h3 class="card-title">{{ item.title }}</h3>
         <h4 class="card-title">{{ item.status }}</h4>
@@ -29,33 +24,24 @@
   <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
     <div class="modal-content">
       <button class="close-btn" @click="closeModal">✖</button>
-
       <div class="modal-body">
         <!-- Left Side -->
         <div class="modal-left">
-          <h2 class="modal-title">{{ selectedItem.title }}</h2>
-          <p class="modal-desc">{{ selectedItem.desc }}</p>
-          <p class="modal-desc">{{ selectedItem.updateOn }}</p>
-          <p class="modal-detail">{{ selectedItem.detail }}</p>
+          <h2 class="modal-title">{{ modalItem.title }}</h2>
+          <p class="modal-desc">{{ modalItem.desc }}</p>
+          <p class="modal-desc">{{ modalItem.updateOn }}</p>
+          <p class="modal-detail">{{ modalItem.detail }}</p>
         </div>
 
         <!-- Right Side (Slide Show) -->
         <div class="modal-right">
           <div class="slideshow-container">
             <!-- Slide -->
-            <div
-              class="slide"
-              v-for="(img, idx) in selectedItem.images"
-              :key="idx"
-              v-show="idx === slideIndex"
-            >
+            <div class="slide" v-for="(img, idx) in selectedItem.images" :key="idx" v-show="idx === slideIndex">
               <img :src="img" class="slide-image" />
 
               <!-- ✅ ป้ายประเภทภาพ (เฉพาะใน Modal) -->
-              <span
-                class="slide-label"
-                :class="getImageType(img)"
-              >
+              <span class="slide-label" :class="getImageType(img)">
                 {{ getImageType(img) === 'real' ? 'Photo' : '3D Render' }}
               </span>
             </div>
@@ -67,14 +53,8 @@
 
           <!-- ✅ Thumbnail -->
           <div class="scroll-container" ref="scrollContainer">
-            <img
-              v-for="(thumb, index) in selectedItem.images"
-              :key="index"
-              :src="thumb"
-              class="scroll-image"
-              :class="{ active: index === slideIndex }"
-              @click="setSlide(index)"
-            />
+            <img v-for="(thumb, index) in selectedItem.images" :key="index" :src="thumb" class="scroll-image"
+              :class="{ active: index === slideIndex }" @click="setSlide(index)" />
           </div>
         </div>
       </div>
@@ -83,13 +63,45 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { portfolios } from '../data/portfolio'
 
 const showModal = ref(false)
 const selectedItem = ref({})
 const slideIndex = ref(0)
 const scrollContainer = ref(null)
+const lang = ref(sessionStorage.getItem('lang') || 'en')
+
+// ฟัง event ปุ่มเปลี่ยนภาษา
+onMounted(() => {
+  window.addEventListener('language-changed', e => {
+    lang.value = e.detail
+    sessionStorage.setItem('lang', e.detail)
+  })
+})
+
+// ✅ แปลง portfolios ตามภาษาที่เลือก
+const translatedPortfolios = computed(() =>
+  portfolios.map((p) => ({
+    ...p,
+    title: p.translations[lang.value].title,
+    status: p.translations[lang.value].status,
+    desc: p.translations[lang.value].desc,
+    updateOn: p.translations[lang.value].updateOn,
+    detail: p.translations[lang.value].detail,
+  }))
+)
+const modalItem = computed(() => {
+  if (!selectedItem.value.translations) return selectedItem.value
+  return {
+    ...selectedItem.value,
+    title: selectedItem.value.translations[lang.value]?.title || selectedItem.value.title,
+    desc: selectedItem.value.translations[lang.value]?.desc || selectedItem.value.desc,
+    status: selectedItem.value.translations[lang.value]?.status || selectedItem.value.status,
+    updateOn: selectedItem.value.translations[lang.value]?.updateOn || selectedItem.value.updateOn,
+    detail: selectedItem.value.translations[lang.value]?.detail || selectedItem.value.detail,
+  }
+})
 
 function openModal(item) {
   selectedItem.value = item
@@ -415,6 +427,7 @@ function getImageType(imagePath) {
 .scroll-image:hover {
   opacity: 0.8;
 }
+
 /* ---------- การ์ด ---------- */
 .image-wrapper {
   position: relative;
@@ -435,11 +448,13 @@ function getImageType(imagePath) {
 }
 
 .image-label.real {
-  background-color: rgba(34, 139, 34, 0.7); /* เขียว Real */
+  background-color: rgba(34, 139, 34, 0.7);
+  /* เขียว Real */
 }
 
 .image-label.render {
-  background-color: rgba(255, 140, 0, 0.7); /* ส้ม 3D */
+  background-color: rgba(255, 140, 0, 0.7);
+  /* ส้ม 3D */
 }
 
 /* ---------- ป้ายใน Modal ---------- */
@@ -491,12 +506,13 @@ function getImageType(imagePath) {
   border-color: #b55c00;
   transform: scale(1.05);
 }
+
 @media only screen and (max-width: 1440px) {
   .slide-count {
     bottom: 30vh;
   }
-
 }
+
 @media only screen and (max-width: 1366px) {
   .card {
     width: 25vw;
@@ -507,9 +523,11 @@ function getImageType(imagePath) {
   .text {
     font-size: 4vh;
   }
+
   .subtitle {
     font-size: 4vh;
   }
+
   .portfolio-section {
     padding: 50px 120px;
   }
